@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="zh-CN" data-head-tone="light" data-dock-tone="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' file: data:; media-src 'self' file:; style-src 'self' file:; script-src 'self' file:; font-src 'self' file:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="D5 Arco 是面向建筑与空间设计的 AI Agent：方向没定时一起推敲，定了接着做出图、镜头和汇报，要做实的时候接上 D5 Render。">
+<meta name="theme-color" content="#fbfaf8">
+<title>D5 Arco｜建筑与空间设计的 AI Agent</title>
+<link rel="icon" href="v8/assets/brand.webp">
+<link rel="stylesheet" href="v8/page.css">
+<link rel="stylesheet" href="v8/generated.css">
+<script defer src="v8/page.js"></script>
+</head>
+<body>
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-add" viewBox="0 0 16 16"><g><path fill="currentColor" d="M8.5 2a.5.5 0 0 0-1 0v5.5H2a.5.5 0 0 0 0 1h5.5V14a.5.5 0 0 0 1 0V8.5H14a.5.5 0 0 0 0-1H8.5V2z"/></g></symbol><symbol id="i-appwindow" viewBox="0 0 16 16"><g><path d="M2.02 3.768a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-10a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.27 6a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm2.5 0a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" fill="currentColor"/></g></symbol><symbol id="i-arrowoutup" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M7.646 2.146a.5.5 0 0 1 .708 0l2.5 2.5a.5.5 0 0 1-.708.708L8.5 3.707V9.5a.5.5 0 0 1-1 0V3.707L5.854 5.354a.5.5 0 1 1-.708-.708l2.5-2.5ZM2.5 9a.5.5 0 0 1 .5.5V13h10V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5Z" fill="currentColor"/></g></symbol><symbol id="i-arrowup" viewBox="0 0 16 16"><g><path d="M8 13.5v-11m0 0L3.5 7M8 2.5 12.5 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-at" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M6.927 2.606A5.5 5.5 0 0 1 13.5 8c0 .643-.118 1.162-.33 1.504-.195.312-.475.496-.92.496-.445 0-.725-.184-.92-.496C11.119 9.162 11 8.643 11 8V5.5a.5.5 0 0 0-1 0v.264a3 3 0 1 0 .372 4.073c.034.067.07.132.11.195.368.593.963.968 1.768.968s1.4-.375 1.768-.968c.35-.563.482-1.294.482-2.032A6.5 6.5 0 1 0 8 14.5c1.313 0 2.735-.39 3.777-1.084a.5.5 0 1 0-.554-.832c-.859.57-2.083.916-3.223.916A5.5 5.5 0 0 1 6.927 2.606ZM6 8a2 2 0 1 1 4 0 2 2 0 0 1-4 0Z" fill="currentColor"/></g></symbol><symbol id="i-axis" viewBox="0 0 16 16"><g><path fill="currentColor" d="M1.5 9.757a.5.5 0 0 1 .5.5v3.065L7.5 8.28V2.707L5.354 4.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V8.28l5.5 5.042v-3.065a.5.5 0 0 1 1 0V14.5a.5.5 0 0 1-.5.5h-4.243a.5.5 0 0 1 0-1h3.003L8 9.178 2.74 14h3.003a.5.5 0 1 1 0 1H1.5a.5.5 0 0 1-.5-.5v-4.243a.5.5 0 0 1 .5-.5z"/></g></symbol><symbol id="i-close" viewBox="0 0 16 16"><g><path stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" d="m3.5 3.5 9 9m0-9-9 9"/></g></symbol><symbol id="i-comment" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M4.284 3.162a6.1 6.1 0 1 1 .861 10.228l-1.973.658a.966.966 0 0 1-1.222-1.222l.66-1.971a6.1 6.1 0 0 1 1.674-7.693Zm4.048-.251a5.1 5.1 0 0 0-4.746 7.644.5.5 0 0 1 .042.409l-.709 2.115 2.118-.707a.5.5 0 0 1 .409.042A5.1 5.1 0 1 0 8.332 2.91Z" fill="currentColor"/></g></symbol><symbol id="i-cornersout" viewBox="0 0 32 32"><g><path d="M21 6h5v5M11 26H6v-5m20 0v5h-5M6 11V6h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-frame" viewBox="0 0 16 16"><g><path d="M2 3.5h12m-10.5-2v13m-1.5-2h12m-1.5-11v13" stroke="currentColor" stroke-linecap="round"/></g></symbol><symbol id="i-imagestar" viewBox="0 0 16 16"><g><path d="M9.5 8a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="m12 1.447-.558 1.535v.002a.771.771 0 0 1-.458.457h-.002L9.447 4l1.537.559a.771.771 0 0 1 .457.457v.002L12 6.553l.558-1.535v-.002a.772.772 0 0 1 .458-.457h.002L14.553 4l-1.535-.558h-.002a.771.771 0 0 1-.457-.458v-.002L12 1.447Zm-.438-1.31a.767.767 0 0 1 1.158.364l.001.003.74 2.035 2.038.741a.768.768 0 0 1 0 1.44l-.003.001-2.035.74-.74 2.035-.001.003a.768.768 0 0 1-1.44 0l-.001-.003-.74-2.035L8.5 4.72a.768.768 0 0 1 0-1.44l.003-.001 2.035-.74.74-2.035L11.28.5a.768.768 0 0 1 .282-.364ZM2.5 4a.5.5 0 0 0-.5.5v6.197l2.923-3.248A1.5 1.5 0 0 1 7.1 7.392l2.255 2.254a.5.5 0 0 1-.708.708L6.392 8.099a.5.5 0 0 0-.725.019L2 12.192v.308a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V9a.5.5 0 0 1 1 0v3.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-8A1.5 1.5 0 0 1 2.5 3H6a.5.5 0 0 1 0 1H2.5Z" fill="currentColor"/></g></symbol><symbol id="i-notepageline" viewBox="0 0 16 16"><g><path d="M6 5.5h4M6 8h2m1.5 6.5h-6a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v9m-4 3v-2a1 1 0 0 1 1-1h3m-4 3 4-3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-playsimple" viewBox="0 0 16 16"><g><path d="M12.794 7.175a1 1 0 0 1 0 1.65l-6.73 4.604a1 1 0 0 1-1.564-.825V3.396a1 1 0 0 1 1.565-.825l6.729 4.604Z" stroke="currentColor" stroke-linejoin="round"/></g></symbol><symbol id="i-textarticlestar" viewBox="0 0 32 32"><g><path d="M15 17h13M10 3.5l2.376 4.624L17 10.5l-4.624 2.376L10 17.5l-2.376-4.624L3 10.5l4.624-2.376L10 3.5ZM19 6h4m-2-2v4M5 27h23M5 22h23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-video" viewBox="0 0 16 16"><g><path fill="currentColor" d="M11 10.417V11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1l2.553-1.276A1 1 0 0 1 15 5.618v5.391a1 1 0 0 1-1.504.864L11 10.417zM3 4h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm8 5.259 3 1.75V5.618l-3 1.5v2.141z" clip-rule="evenodd" fill-rule="evenodd"/></g></symbol><symbol id="i-pause" viewBox="0 0 16 16"><path fill="currentColor" d="M4.5 2.5h2v11h-2zm5 0h2v11h-2z"/></symbol><symbol id="i-arrow-right" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" d="M2.5 8h11M9.5 4l4 4-4 4"/></symbol><symbol id="i-arrow-down" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" d="M8 2.5v11M4 9.5l4 4 4-4"/></symbol><symbol id="i-check" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M3 8.5l3.2 3.2L13 5"/></symbol><symbol id="i-copy" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" d="M5.5 5.5v-2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2m-7-5h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Z"/></symbol><symbol id="i-sun" viewBox="0 0 16 16"><g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"><circle cx="8" cy="8" r="2.6"/><path d="M8 1.6v1.6M8 12.8v1.6M1.6 8h1.6M12.8 8h1.6M3.5 3.5l1.1 1.1M11.4 11.4l1.1 1.1M3.5 12.5l1.1-1.1M11.4 4.6l1.1-1.1"/></g></symbol></svg>
+<a class="skip" href="#main">跳至正文</a>
+
+<header class="site-header" data-header>
+  <div class="shell header-in">
+    <a class="brand" href="#top" aria-label="D5 Arco 首页"><img src="v8/assets/brand.webp" alt="" width="28" height="28"><span>D5 Arco</span></a>
+    <nav class="site-nav" aria-label="页面导航">
+      <a href="#place">在 D5 中</a>
+      <a href="#task">一件任务</a>
+      <a href="#loop">Render 往返</a>
+      <a href="#start">从哪开始</a>
+    </nav>
+    <div class="header-act">
+      <a class="btn btn-primary btn-sm" href="#get">获取 Arco</a>
+      <button type="button" class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="打开菜单"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" data-menu hidden>
+  <nav aria-label="移动端导航">
+    <a href="#top">Arco 是什么</a>
+    <a href="#place">在 D5 中的位置</a>
+    <a href="#task">一件任务</a>
+    <a href="#loop">与 D5 Render 往返</a>
+    <a href="#start">从你手上的事开始</a>
+  </nav>
+  <a class="btn btn-primary" href="#get">获取 Arco</a>
+</div>
+
+<!-- 常驻的对话入口：随滚动说出当前这一步在商量什么；点开可以直接写下自己的任务 -->
+<div class="dock" data-dock hidden>
+  <button type="button" class="dock-pill" data-dock-toggle aria-expanded="false" aria-controls="dock-panel">
+    <span class="dock-orb" aria-hidden="true"><i></i></span>
+    <span class="dock-text"><b>Arco</b><span data-dock-line>方向没定？先摆几版出来看。</span></span>
+    <span class="dock-go"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-comment"/></svg><span>说说你的任务</span></span>
+  </button>
+  <div class="dock-panel" id="dock-panel" data-dock-panel role="dialog" aria-label="和 Arco 说说你手上的事" hidden>
+    <div class="dock-h">
+      <strong>这件任务走到哪了</strong>
+      <span class="tag">对话示意</span>
+      <button type="button" class="dock-x" data-dock-close aria-label="收起"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-close"/></svg></button>
+    </div>
+    <ol class="dock-rail" data-dock-rail>
+      <li><a href="#task-explore" data-dock-stage="explore"><b>前期探索</b><span>方向没定，先摆出来看</span></a></li>
+      <li><a href="#task-decide" data-dock-stage="decide"><b>定方向</b><span>就这一版，往下做</span></a></li>
+      <li><a href="#task-angles" data-dock-stage="angles"><b>深化</b><span>楼不变，走近了看</span></a></li>
+      <li><a href="#loop" data-dock-stage="loop"><b>去 D5 Render</b><span>做实，再带回来</span></a></li>
+      <li><a href="#express" data-dock-stage="express"><b>表达</b><span>镜头和汇报</span></a></li>
+    </ol>
+    <form class="dock-form" data-dock-form novalidate>
+      <label class="sr-only" for="dock-input">你手上的那件事</label>
+      <input id="dock-input" type="text" data-dock-input placeholder="说说你手上的那件事…" autocomplete="off" maxlength="200" enterkeyhint="go">
+      <button type="submit" aria-label="带到页面末尾的输入框"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrowup"/></svg></button>
+    </form>
+    <p class="dock-note">不会发送任何内容。写下的话会带到页面末尾的输入框里。</p>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ===================== 1. 产品身份 + 产品动态视觉 ===================== -->
+<section class="hero tone-light" id="top" data-tone="light" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="shell hero-head">
+    <h1 id="hero-title"><span class="h1-name">D5 Arco</span><span class="h1-def">建筑与空间设计的 AI Agent</span></h1>
+    <div class="hero-side">
+      <p class="hero-lead"><span class="nb">方向没定时一起推敲，</span><span class="nb">定了就接着做出来；</span><span class="nb">要做实的时候，接上 D5 Render。</span></p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="#get">获取 Arco</a>
+        <a class="btn btn-line" href="#task"><span class="lg">看它做完一件任务</span><span class="sm">看一件任务</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-down"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="shell-wide">
+    <div class="film" data-film>
+      <div class="film-stage" data-film-stage data-scene="cover" role="group" aria-label="产品演示：一件任务的五个片段">
+        <div class="film-top">
+          <ol class="film-chapters">
+            <li><button type="button" data-film-go="0"><i class="film-bar"></i><span>说出任务</span></button></li>
+            <li><button type="button" data-film-go="1"><i class="film-bar"></i><span>一起推敲</span></button></li>
+            <li><button type="button" data-film-go="2"><i class="film-bar"></i><span>接着做出来</span></button></li>
+            <li><button type="button" data-film-go="3"><i class="film-bar"></i><span>去 D5 Render</span></button></li>
+            <li><button type="button" data-film-go="4"><i class="film-bar"></i><span>整理成汇报</span></button></li>
+          </ol>
+          <button type="button" class="film-toggle" data-film-toggle aria-label="暂停演示"><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg></button>
+        </div>
+
+        <div class="film-canvas" data-film-canvas aria-hidden="true">
+
+          <!-- 片头：这件任务最后做出来的东西；只在载入时出现一次，随后回到第一句话 -->
+          <div class="sc sc-c">
+            <div class="cv">
+              <span class="cv-t t0"><img src="v8/assets/img/landmark-6.webp" alt="" width="765" height="1024" decoding="async"><em>第一轮</em></span>
+              <span class="cv-t t1"><img src="v8/assets/img/landmark-8.webp" alt="" width="765" height="1024" decoding="async"><em>第二轮</em></span>
+              <span class="cv-t t2 is-pick"><img src="v8/assets/img/landmark-11.webp" alt="" width="765" height="1024" decoding="async"><em>选定</em></span>
+              <span class="cv-t t3"><img src="v8/assets/img/landmark-13.webp" alt="" width="765" height="1024" decoding="async"><em>仰视立面</em></span>
+              <span class="cv-t t4"><img src="v8/assets/img/landmark-24.webp" alt="" width="765" height="1024" decoding="async"><em>中庭入口</em></span>
+              <span class="cv-t t5"><img src="v8/assets/img/landmark-19.webp" alt="" width="765" height="1024" decoding="async"><em>街道视角</em></span>
+            </div>
+            <p class="cv-src">官方演示项目「超高层地标」</p>
+          </div>
+
+          <!-- 片段 0：说出任务 -->
+          <div class="sc sc-0">
+            <div class="s0-composer a t1">
+              <p class="s0-line"><span class="type ty1">滨水地块上，要一座超高层地标。</span></p>
+              <p class="s0-line"><span class="type ty2">方向还没定，先帮我摆几版看看。</span></p>
+              <span class="s0-tools"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-add"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-at"/></svg></span>
+              <span class="s0-send"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrowup"/></svg></span>
+            </div>
+            <div class="s0-reply a t16"><span class="orb"><i></i></span><p>先只比形体，还是直接看接近实景的样子？</p></div>
+            <div class="s0-chips"><span class="chip a t19 is-picked">先比形体</span><span class="chip a t20">接近实景</span><span class="chip a t21">两种都看</span></div>
+            <p class="s0-have a t4">手上的材料，都可以带上</p>
+            <span class="s0-file f1 a t5"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-imagestar"/></svg>场地照片</span>
+            <span class="s0-file f2 a t7"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-frame"/></svg>设计稿</span>
+            <span class="s0-file f3 a t9"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-notepageline"/></svg>PDF</span>
+            <span class="s0-file f4 a t11"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-textarticlestar"/></svg>文档</span>
+          </div>
+
+          <!-- 片段 1：一起推敲 -->
+          <div class="sc sc-1">
+            <span class="bub me s1-b b1 a t1">先比形体。</span>
+            <span class="s1-label l1 a t3">第一轮 · 3 版</span>
+            <span class="s1-say y1 a t8"><span class="orb"><i></i></span>三版，只比轮廓和体量。</span>
+            <span class="bub me s1-b b2 a t12">换成接近实景的，再看一轮。</span>
+            <span class="s1-label l2 a t14">第二轮 · 4 版</span>
+            <span class="s1-say y2 a t20"><span class="orb"><i></i></span>四版，放进了天色和城市。</span>
+            <span class="bub me s1-b b3 a t25">就这一版。</span>
+            <span class="s1-t r1 c1 a t4"><img src="v8/assets/thumb/landmark-5.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s1-t r1 c2 a t5"><img src="v8/assets/thumb/landmark-6.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s1-t r1 c3 a t6"><img src="v8/assets/thumb/landmark-7.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s1-t r2 c1 a t15"><img src="v8/assets/thumb/landmark-8.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s1-t r2 c2 a t16"><img src="v8/assets/thumb/landmark-9.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s1-t r2 c3 a t17"><img src="v8/assets/thumb/landmark-10.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s1-t r2 c4 is-pick a t18"><img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" decoding="async"><em>选定</em></span>
+          </div>
+
+          <!-- 片段 2：接着做出来 -->
+          <div class="sc sc-2">
+            <span class="s2-chosen a t1"><img src="v8/assets/img/landmark-11.webp" alt="" width="765" height="1024" decoding="async"><em>选定</em></span>
+            <span class="s2-arrow ar1 a t4"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+            <span class="s2-a g1 a t5"><img src="v8/assets/thumb/landmark-25.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s2-a g2 a t6"><img src="v8/assets/thumb/landmark-24.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s2-a g3 a t7"><img src="v8/assets/thumb/landmark-12.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s2-a g4 a t8"><img src="v8/assets/thumb/landmark-14.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s2-a g5 a t9"><img src="v8/assets/thumb/landmark-13.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s2-a g6 a t10"><img src="v8/assets/thumb/landmark-15.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s2-a g7 a t11"><img src="v8/assets/thumb/landmark-18.webp" alt="" width="240" height="321" decoding="async"></span>
+            <span class="s2-a g8 a t12"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" decoding="async"></span>
+            <p class="s2-note a t13">8 个视角，参考图都是选定那张</p>
+            <span class="bub me s2-say a t3">楼不变，换八个视角；再做一段镜头。</span>
+            <span class="s2-arrow ar2 a t15"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></span>
+            <span class="s2-video a t16">
+              <video data-film-video muted playsinline loop preload="none" poster="v8/assets/poster/landmark-21.webp" src="v8/media/landmark-21.mp4" tabindex="-1"></video>
+              <em><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-video"/></svg>FPV 穿行 · 15 秒</em>
+            </span>
+          </div>
+
+          <!-- 片段 3：去 D5 Render，再回来（联动示意） -->
+          <div class="sc sc-3">
+            <div class="s3-arco a t1">
+              <p class="s3-h"><span class="orb"><i></i></span>Arco</p>
+              <span class="s3-img"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" decoding="async"><em>参考图</em></span>
+              <span class="s3-feat a t4"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>为 3D 场景布光</span>
+              <span class="s3-check a t6"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>使用当前参考图</span>
+              <span class="s3-back a t24"><svg class="s3d is-lit" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="D5 Render 场景示意：塔楼底部与街道的体块模型，已布光"><defs><linearGradient id="f3b-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#565c6b"/><stop offset="1" stop-color="#868c99"/></linearGradient><linearGradient id="f3b-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101627"/><stop offset=".62" stop-color="#2b3352"/><stop offset="1" stop-color="#7a5a52"/></linearGradient><radialGradient id="f3b-glow"><stop offset="0" stop-color="#ffdca8" stop-opacity=".95"/><stop offset=".35" stop-color="#ffb86a" stop-opacity=".45"/><stop offset="1" stop-color="#ff9d4a" stop-opacity="0"/></radialGradient><linearGradient id="f3b-shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05060c" stop-opacity=".5"/><stop offset="1" stop-color="#05060c" stop-opacity=".34"/></linearGradient></defs><rect width="400" height="250" fill="url(#f3b-sky)"/><rect class="s3d-on" width="400" height="250" fill="url(#f3b-dusk)"/><path d="M262 104h30v70h-30zM296 120h32v54h-32zM332 92h68v82h-68z" fill="#6a7080"/><path d="M262 104h30v4h-30zM296 120h32v4h-32zM332 92h68v4h-68z" fill="#7c8292"/><path d="M0 172h400v78H0z" fill="#4b4f5a"/><path d="M0 250h196l58-78h-18z" fill="#6c717d"/><path d="M196 250h204v-52l-140-26h-6z" fill="#3c3f49"/><g stroke="#fff" stroke-opacity=".1" stroke-width=".8"><path d="M40 250l202-78M90 250l158-78M140 250l111-78"/><path d="M0 232h186M22 214h177M60 198h152M96 186h126"/></g><path d="M22 0h76l26 172H32z" fill="#8b909d"/><path d="M98 0h54l18 172h-46z" fill="#70757f"/><path d="M58 0h40L76 92z" fill="#9ba0ac"/><path d="M124 172l28-112 18 112z" fill="#5f646f"/><path d="M0 118l42 54H0z" fill="#7d828e"/><path d="M152 122l64 28-10 22h-46z" fill="#80858f"/><path d="M170 172l46-22 16 22z" fill="#5c606b"/><path d="M62 172l10-40h34l8 40z" fill="#2a2c34"/><path d="M196 206v25.5" stroke="#565b66" stroke-width="2.8"/><circle cx="196" cy="202.6" r="17" fill="#4a554f"/><circle cx="190.9" cy="198.3" r="10.5" fill="#566158"/><path d="M222 190v16.5" stroke="#565b66" stroke-width="1.8"/><circle cx="222" cy="187.8" r="11" fill="#4a554f"/><circle cx="218.7" cy="185.1" r="6.8" fill="#566158"/><path d="M238 181v10.5" stroke="#565b66" stroke-width="1.2"/><circle cx="238" cy="179.6" r="7" fill="#4a554f"/><circle cx="235.9" cy="177.8" r="4.3" fill="#566158"/><path d="M150 228h30l4 8h-38zM118 204h20l3 6h-26z" fill="#555a65"/><rect class="s3d-on" width="400" height="250" fill="url(#f3b-shade)"/><g class="s3d-on" stroke="#ffcf94" stroke-width="2.2" stroke-dasharray="7 5" stroke-linecap="round" opacity=".9"><path d="M24.5 26H96.9"/><path d="M25.6 44H99.6"/><path d="M26.6 62H102.4"/><path d="M27.6 80H105.1"/><path d="M28.7 98H107.8"/><path d="M29.7 116H110.5"/><path d="M104.1 34H150.6"/><path d="M107.8 58H153.1"/><path d="M111.4 82H155.6"/><path d="M115.0 106H158.1"/><path d="M118.6 130H160.7"/></g><path class="s3d-on" d="M62 172l10-40h34l8 40z" fill="#ffd9a3"/><ellipse class="s3d-on" cx="88" cy="186" rx="52" ry="12" fill="url(#f3b-glow)"/><ellipse class="s3d-on" cx="168" cy="230" rx="50" ry="11" fill="url(#f3b-glow)"/><ellipse class="s3d-on" cx="214" cy="200" rx="30" ry="7" fill="url(#f3b-glow)"/><path d="M170 150v78" stroke="#8d92a0" stroke-width="1.2"/><circle cx="170" cy="150" r="26" fill="url(#f3b-glow)" class="s3d-on"/><circle cx="170" cy="150" r="2.9" fill="#fff3dc" class="s3d-on"/><path d="M210 158v40" stroke="#8d92a0" stroke-width="1.2"/><circle cx="210" cy="158" r="16" fill="url(#f3b-glow)" class="s3d-on"/><circle cx="210" cy="158" r="1.8" fill="#fff3dc" class="s3d-on"/><path d="M230 163v20" stroke="#8d92a0" stroke-width="1.2"/><circle cx="230" cy="163" r="10" fill="url(#f3b-glow)" class="s3d-on"/><circle cx="230" cy="163" r="1.6" fill="#fff3dc" class="s3d-on"/></svg><em>当前视口</em></span>
+              <span class="s3-added a t26"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>当前视口已添加到画布</span>
+            </div>
+            <div class="s3-wire w-go a t8"><i></i><span>参考图的布光效果</span></div>
+            <div class="s3-wire w-back a t21"><i></i><span>当前视口</span></div>
+            <div class="s3-render a t2">
+              <p class="s3-h"><b>D5 Render</b><span>工程窗口示意</span></p>
+              <div class="s3-view"><svg class="s3d" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="D5 Render 场景示意：塔楼底部与街道的体块模型"><defs><linearGradient id="f3a-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#565c6b"/><stop offset="1" stop-color="#868c99"/></linearGradient><linearGradient id="f3a-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101627"/><stop offset=".62" stop-color="#2b3352"/><stop offset="1" stop-color="#7a5a52"/></linearGradient><radialGradient id="f3a-glow"><stop offset="0" stop-color="#ffdca8" stop-opacity=".95"/><stop offset=".35" stop-color="#ffb86a" stop-opacity=".45"/><stop offset="1" stop-color="#ff9d4a" stop-opacity="0"/></radialGradient><linearGradient id="f3a-shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05060c" stop-opacity=".5"/><stop offset="1" stop-color="#05060c" stop-opacity=".34"/></linearGradient></defs><rect width="400" height="250" fill="url(#f3a-sky)"/><rect class="s3d-on" width="400" height="250" fill="url(#f3a-dusk)"/><path d="M262 104h30v70h-30zM296 120h32v54h-32zM332 92h68v82h-68z" fill="#6a7080"/><path d="M262 104h30v4h-30zM296 120h32v4h-32zM332 92h68v4h-68z" fill="#7c8292"/><path d="M0 172h400v78H0z" fill="#4b4f5a"/><path d="M0 250h196l58-78h-18z" fill="#6c717d"/><path d="M196 250h204v-52l-140-26h-6z" fill="#3c3f49"/><g stroke="#fff" stroke-opacity=".1" stroke-width=".8"><path d="M40 250l202-78M90 250l158-78M140 250l111-78"/><path d="M0 232h186M22 214h177M60 198h152M96 186h126"/></g><path d="M22 0h76l26 172H32z" fill="#8b909d"/><path d="M98 0h54l18 172h-46z" fill="#70757f"/><path d="M58 0h40L76 92z" fill="#9ba0ac"/><path d="M124 172l28-112 18 112z" fill="#5f646f"/><path d="M0 118l42 54H0z" fill="#7d828e"/><path d="M152 122l64 28-10 22h-46z" fill="#80858f"/><path d="M170 172l46-22 16 22z" fill="#5c606b"/><path d="M62 172l10-40h34l8 40z" fill="#2a2c34"/><path d="M196 206v25.5" stroke="#565b66" stroke-width="2.8"/><circle cx="196" cy="202.6" r="17" fill="#4a554f"/><circle cx="190.9" cy="198.3" r="10.5" fill="#566158"/><path d="M222 190v16.5" stroke="#565b66" stroke-width="1.8"/><circle cx="222" cy="187.8" r="11" fill="#4a554f"/><circle cx="218.7" cy="185.1" r="6.8" fill="#566158"/><path d="M238 181v10.5" stroke="#565b66" stroke-width="1.2"/><circle cx="238" cy="179.6" r="7" fill="#4a554f"/><circle cx="235.9" cy="177.8" r="4.3" fill="#566158"/><path d="M150 228h30l4 8h-38zM118 204h20l3 6h-26z" fill="#555a65"/><rect class="s3d-on" width="400" height="250" fill="url(#f3a-shade)"/><g class="s3d-on" stroke="#ffcf94" stroke-width="2.2" stroke-dasharray="7 5" stroke-linecap="round" opacity=".9"><path d="M24.5 26H96.9"/><path d="M25.6 44H99.6"/><path d="M26.6 62H102.4"/><path d="M27.6 80H105.1"/><path d="M28.7 98H107.8"/><path d="M29.7 116H110.5"/><path d="M104.1 34H150.6"/><path d="M107.8 58H153.1"/><path d="M111.4 82H155.6"/><path d="M115.0 106H158.1"/><path d="M118.6 130H160.7"/></g><path class="s3d-on" d="M62 172l10-40h34l8 40z" fill="#ffd9a3"/><ellipse class="s3d-on" cx="88" cy="186" rx="52" ry="12" fill="url(#f3a-glow)"/><ellipse class="s3d-on" cx="168" cy="230" rx="50" ry="11" fill="url(#f3a-glow)"/><ellipse class="s3d-on" cx="214" cy="200" rx="30" ry="7" fill="url(#f3a-glow)"/><path d="M170 150v78" stroke="#8d92a0" stroke-width="1.2"/><circle cx="170" cy="150" r="26" fill="url(#f3a-glow)" class="s3d-on"/><circle cx="170" cy="150" r="2.9" fill="#fff3dc" class="s3d-on"/><path d="M210 158v40" stroke="#8d92a0" stroke-width="1.2"/><circle cx="210" cy="158" r="16" fill="url(#f3a-glow)" class="s3d-on"/><circle cx="210" cy="158" r="1.8" fill="#fff3dc" class="s3d-on"/><path d="M230 163v20" stroke="#8d92a0" stroke-width="1.2"/><circle cx="230" cy="163" r="10" fill="url(#f3a-glow)" class="s3d-on"/><circle cx="230" cy="163" r="1.6" fill="#fff3dc" class="s3d-on"/></svg></div>
+              <p class="s3-status"><span class="st st1">正在将灯光写入 D5 场景</span><span class="st st2">灯光已应用</span></p>
+            </div>
+          </div>
+
+          <!-- 片段 4：整理成汇报（版式示意） -->
+          <div class="sc sc-4">
+            <span class="bub me s4-say a t1">把这些整理成一页汇报。</span>
+            <div class="s4-reply a t4"><span class="orb"><i></i></span><p>整理成展示页，图和说明都取自前面的内容。</p></div>
+            <div class="s4-paper a t6">
+              <p class="s4-kicker"><span>超高层地标 · 方案汇报</span><em>版式示意</em></p>
+              <p class="s4-title">折板裙房，托起一座纤细的塔</p>
+              <span class="s4-main"><img src="v8/assets/img/landmark-11.webp" alt="" width="765" height="1024" decoding="async"></span>
+              <span class="s4-row rw1 a t10"><img src="v8/assets/thumb/landmark-12.webp" alt="" width="240" height="321" decoding="async"><span><b>滨水</b>花岗岩阶梯座席，逐级下降到水边</span></span>
+              <span class="s4-row rw2 a t12"><img src="v8/assets/thumb/landmark-15.webp" alt="" width="240" height="321" decoding="async"><span><b>入口</b>折面混凝土雨棚与玻璃大堂</span></span>
+              <span class="s4-row rw3 a t14"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" decoding="async"><span><b>街道</b>树池、街椅与金属百叶塔身</span></span>
+              <p class="s4-foot a t16">附：三段镜头 · FPV 穿行 / 滨水延时 / 日转夜</p>
+            </div>
+            <span class="s4-out o1 a t18"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-appwindow"/></svg>展示页</span>
+            <span class="s4-out o2 a t20"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-textarticlestar"/></svg>汇报文档</span>
+            <p class="s4-end a t23"><span class="nb">一件任务，</span><span class="nb">从头到尾。</span></p>
+          </div>
+        </div>
+
+        <!-- 脚本不可用时的静态画面 -->
+        <div class="film-fallback">
+          <img src="v8/assets/img/landmark-11.webp" alt="官方演示项目「超高层地标」中选定的概念图：折板裙房与纤细塔楼" width="765" height="1024">
+          <ol>
+            <li><b>说出任务</b>一句还没说完整的要求，就可以开始。</li>
+            <li><b>一起推敲</b>方向没定，先摆几版出来，一起比。</li>
+            <li><b>接着做出来</b>定了一版，接着出视角，出镜头。</li>
+            <li><b>去 D5 Render</b>要做实，带进 D5 Render，再把结果带回来。</li>
+            <li><b>整理成汇报</b>最后整理成一页能讲的汇报。</li>
+          </ol>
+        </div>
+
+        <p class="film-caption" data-film-caption>一件任务，从一句话到一页汇报。</p>
+        <span class="film-tag" data-film-tag>网页动态演示</span>
+      </div>
+    </div>
+    <p class="note film-note">网页动态演示，不是官方宣传片。画面取自 Arco 官方演示项目「超高层地标」；对话、D5 Render 窗口和汇报版式为示意。</p>
+    <p class="hero-has"><span>Arco 里有</span>与设计对话 · 策划 · 画布 · 文生图 · 图生视频 · 设计汇报 · D5 工作流</p>
+  </div>
+</section>
+
+<!-- ===================== 2. 在 D5 中的位置 ===================== -->
+<section class="place tone-light" id="place" data-tone="light" aria-labelledby="place-title">
+  <div class="shell">
+    <header class="sec-head" data-reveal>
+      <h2 id="place-title"><span class="nb">D5 Render 把方案做实，</span><span class="nb">Arco 陪你把任务走完。</span></h2>
+      <p>Arco 是 D5 面向建筑与空间设计的 AI Agent。从第一句描述到最后一页汇报，它一直在场；要推敲体量、做实场景、挑选素材的时候，再把 D5 的工具接进来。</p>
+    </header>
+
+    <div class="lanes" data-reveal>
+      <div class="lane-stage st-1"><b>前期探索</b><span>任务书、场地、方向</span></div>
+      <div class="lane-stage st-2"><b>方案深化</b><span>视角、材质、灯光</span></div>
+      <div class="lane-stage st-3"><b>表达与交付</b><span>镜头、汇报、文本</span></div>
+      <div class="lane lane-arco"><img src="v8/assets/brand.webp" alt="" width="26" height="26"><b>D5 Arco</b><span>对话 · 策划 · 画布，贯穿整件任务</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></div>
+      <div class="lane lane-lite"><b>D5 Lite</b><span><span class="lg">轻量设计推敲</span><span class="sm">轻量推敲</span></span></div>
+      <div class="lane lane-render"><b>D5 Render</b><span><span class="lg">深度设计表达，动画及演示制作</span><span class="sm">深度设计表达</span></span></div>
+      <div class="lane lane-works"><b>D5 Works</b><span><span class="lg">素材推荐与搭配</span><span class="sm">素材</span></span></div>
+    </div>
+
+    <ul class="links" data-reveal>
+      <li>
+        <span class="links-m"><img src="v8/assets/img/d5-lite.webp" alt="" width="648" height="336" loading="lazy" decoding="async"></span>
+        <h3>和 D5 Lite</h3>
+        <p>在对话里说出想让 Lite 做的操作；Lite 里的图，也可以发到 Arco 的画布上。</p>
+      </li>
+      <li>
+        <span class="links-m links-m-dark"><svg class="s3d is-lit" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="D5 Render 场景示意：塔楼底部与街道的体块模型，已布光"><defs><linearGradient id="pl-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#565c6b"/><stop offset="1" stop-color="#868c99"/></linearGradient><linearGradient id="pl-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101627"/><stop offset=".62" stop-color="#2b3352"/><stop offset="1" stop-color="#7a5a52"/></linearGradient><radialGradient id="pl-glow"><stop offset="0" stop-color="#ffdca8" stop-opacity=".95"/><stop offset=".35" stop-color="#ffb86a" stop-opacity=".45"/><stop offset="1" stop-color="#ff9d4a" stop-opacity="0"/></radialGradient><linearGradient id="pl-shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05060c" stop-opacity=".5"/><stop offset="1" stop-color="#05060c" stop-opacity=".34"/></linearGradient></defs><rect width="400" height="250" fill="url(#pl-sky)"/><rect class="s3d-on" width="400" height="250" fill="url(#pl-dusk)"/><path d="M262 104h30v70h-30zM296 120h32v54h-32zM332 92h68v82h-68z" fill="#6a7080"/><path d="M262 104h30v4h-30zM296 120h32v4h-32zM332 92h68v4h-68z" fill="#7c8292"/><path d="M0 172h400v78H0z" fill="#4b4f5a"/><path d="M0 250h196l58-78h-18z" fill="#6c717d"/><path d="M196 250h204v-52l-140-26h-6z" fill="#3c3f49"/><g stroke="#fff" stroke-opacity=".1" stroke-width=".8"><path d="M40 250l202-78M90 250l158-78M140 250l111-78"/><path d="M0 232h186M22 214h177M60 198h152M96 186h126"/></g><path d="M22 0h76l26 172H32z" fill="#8b909d"/><path d="M98 0h54l18 172h-46z" fill="#70757f"/><path d="M58 0h40L76 92z" fill="#9ba0ac"/><path d="M124 172l28-112 18 112z" fill="#5f646f"/><path d="M0 118l42 54H0z" fill="#7d828e"/><path d="M152 122l64 28-10 22h-46z" fill="#80858f"/><path d="M170 172l46-22 16 22z" fill="#5c606b"/><path d="M62 172l10-40h34l8 40z" fill="#2a2c34"/><path d="M196 206v25.5" stroke="#565b66" stroke-width="2.8"/><circle cx="196" cy="202.6" r="17" fill="#4a554f"/><circle cx="190.9" cy="198.3" r="10.5" fill="#566158"/><path d="M222 190v16.5" stroke="#565b66" stroke-width="1.8"/><circle cx="222" cy="187.8" r="11" fill="#4a554f"/><circle cx="218.7" cy="185.1" r="6.8" fill="#566158"/><path d="M238 181v10.5" stroke="#565b66" stroke-width="1.2"/><circle cx="238" cy="179.6" r="7" fill="#4a554f"/><circle cx="235.9" cy="177.8" r="4.3" fill="#566158"/><path d="M150 228h30l4 8h-38zM118 204h20l3 6h-26z" fill="#555a65"/><rect class="s3d-on" width="400" height="250" fill="url(#pl-shade)"/><g class="s3d-on" stroke="#ffcf94" stroke-width="2.2" stroke-dasharray="7 5" stroke-linecap="round" opacity=".9"><path d="M24.5 26H96.9"/><path d="M25.6 44H99.6"/><path d="M26.6 62H102.4"/><path d="M27.6 80H105.1"/><path d="M28.7 98H107.8"/><path d="M29.7 116H110.5"/><path d="M104.1 34H150.6"/><path d="M107.8 58H153.1"/><path d="M111.4 82H155.6"/><path d="M115.0 106H158.1"/><path d="M118.6 130H160.7"/></g><path class="s3d-on" d="M62 172l10-40h34l8 40z" fill="#ffd9a3"/><ellipse class="s3d-on" cx="88" cy="186" rx="52" ry="12" fill="url(#pl-glow)"/><ellipse class="s3d-on" cx="168" cy="230" rx="50" ry="11" fill="url(#pl-glow)"/><ellipse class="s3d-on" cx="214" cy="200" rx="30" ry="7" fill="url(#pl-glow)"/><path d="M170 150v78" stroke="#8d92a0" stroke-width="1.2"/><circle cx="170" cy="150" r="26" fill="url(#pl-glow)" class="s3d-on"/><circle cx="170" cy="150" r="2.9" fill="#fff3dc" class="s3d-on"/><path d="M210 158v40" stroke="#8d92a0" stroke-width="1.2"/><circle cx="210" cy="158" r="16" fill="url(#pl-glow)" class="s3d-on"/><circle cx="210" cy="158" r="1.8" fill="#fff3dc" class="s3d-on"/><path d="M230 163v20" stroke="#8d92a0" stroke-width="1.2"/><circle cx="230" cy="163" r="10" fill="url(#pl-glow)" class="s3d-on"/><circle cx="230" cy="163" r="1.6" fill="#fff3dc" class="s3d-on"/></svg></span>
+        <h3>和 D5 Render</h3>
+        <p>关联正在打开的工程，取场景视口，用布景和灯光；渲染结果再带回画布。</p>
+      </li>
+      <li>
+        <span class="links-m links-m-dark"><img src="v8/assets/img/d5-works.webp" alt="" width="1200" height="585" loading="lazy" decoding="async"></span>
+        <h3>和 D5 Works</h3>
+        <p>在对话里用 D5 Works 的工具找素材，做推荐和搭配。</p>
+      </li>
+    </ul>
+    <p class="note" data-reveal>各产品的说明和联动方式，依据 Arco 客户端 0.10.1 的界面文案与 D5 现有页面；实际可用范围以发布版本为准。</p>
+  </div>
+</section>
+
+<!-- ===================== 3. 一件连贯的任务：前浅后深 ===================== -->
+<section class="task tone-light" id="task" data-tone="light" aria-labelledby="task-title">
+  <div class="shell">
+    <header class="sec-head" data-reveal>
+      <h2 id="task-title"><span class="nb">跟着一件任务，</span><span class="nb">从头看到尾。</span></h2>
+      <p>Arco 官方演示项目「超高层地标」：两段描述，七个方向，八个视角，三段镜头。</p>
+      <p class="note">图片、视频和提示词都取自项目文件。左侧的对话是示意，用来说明每一步在商量什么。</p>
+    </header>
+
+    <div class="beat" id="task-explore" data-stage="explore">
+      <h3 class="beat-title" data-reveal><span>前期探索</span>方向没定，先摆出来看。</h3>
+
+      <div class="turn" data-reveal>
+        <div class="talk">
+          <span class="tag">对话示意</span>
+          <p class="msg me">滨水地块上要一座超高层地标。先只看形体，按竞赛模型的感觉来。</p>
+          <p class="msg arco"><span class="orb" aria-hidden="true"><i></i></span>先出三版，背景留白，只比轮廓和体量。</p>
+        </div>
+        <figure class="work round">
+          <div class="shots shots-3"><figure class="shot"><img src="v8/assets/img/landmark-5.webp" alt="第一段描述的第 1 版：竞赛模型式的塔楼形体" width="765" height="1024" loading="lazy" decoding="async"></figure><figure class="shot"><img src="v8/assets/img/landmark-6.webp" alt="第一段描述的第 2 版：竞赛模型式的塔楼形体" width="765" height="1024" loading="lazy" decoding="async"></figure><figure class="shot"><img src="v8/assets/img/landmark-7.webp" alt="第一段描述的第 3 版：竞赛模型式的塔楼形体" width="765" height="1024" loading="lazy" decoding="async"></figure></div>
+          <figcaption>
+            <p class="round-h"><b>第一段描述</b><span>3 版</span></p>
+            <blockquote class="quote" data-quote><p>一座前卫的超高层摩天楼，轮廓极其纤细且不对称，由错动交扣的竖向体量组成，向上收束为狭窄的刀锋状冠部。银灰色金属翼片、密集竖向肋条、深色内凹玻璃、外露斜向结构支撑，以及锐利折面的立面。塔楼向下融入宽阔的雕塑式裙房，配有舒展的肋状屋顶、棱角分明的坡道和层叠露台。极简建筑竞赛可视化，具有精工实体模型般的精确度。接近正面的视角，略微露出侧面，竖线保持笔直，整座塔楼占满画面高度，地平线较低，两侧充分留白。均匀柔和的蓝灰色天空，克制的单色配色，柔和定向日光，细腻金属高光，深沉而受控的阴影，清晰精密的细节。方形构图，无周边城市天际线，无文字，无标志。</p></blockquote>
+          </figcaption>
+        </figure>
+      </div>
+
+      <div class="turn" data-reveal>
+        <div class="talk">
+          <p class="msg me">形体可以了。换成接近实景的渲染，再看一轮。</p>
+          <p class="msg arco"><span class="orb" aria-hidden="true"><i></i></span>这一轮四版，放进了天色、材质和周边的城市。</p>
+        </div>
+        <figure class="work round">
+          <div class="shots shots-4"><figure class="shot"><img src="v8/assets/img/landmark-8.webp" alt="第二段描述的第 1 版：接近实景的塔楼渲染" width="765" height="1024" loading="lazy" decoding="async"></figure><figure class="shot"><img src="v8/assets/img/landmark-9.webp" alt="第二段描述的第 2 版：接近实景的塔楼渲染" width="765" height="1024" loading="lazy" decoding="async"></figure><figure class="shot"><img src="v8/assets/img/landmark-10.webp" alt="第二段描述的第 3 版：接近实景的塔楼渲染" width="765" height="1024" loading="lazy" decoding="async"></figure><figure class="shot"><img src="v8/assets/img/landmark-11.webp" alt="第二段描述的第 4 版：接近实景的塔楼渲染" width="765" height="1024" loading="lazy" decoding="async"></figure></div>
+          <figcaption>
+            <p class="round-h"><b>第二段描述</b><span>4 版</span></p>
+            <blockquote class="quote" data-quote><p>未来感超高层摩天楼的专业建筑渲染，解构主义构造设计。整体式折板裙房无缝过渡为纤细竖向塔楼。立面采用竖向金属百叶、折面结构钢和深色玻璃幕墙。极简阴天天空，冷灰色氛围，高对比度，干净的几何构图，D5 渲染，ArchDaily 风格，8K。</p></blockquote>
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 定方向：从这里开始，页面由浅入深 -->
+<section class="decide" id="task-decide" data-stage="decide" aria-labelledby="decide-title">
+  <div class="decide-top tone-light" data-tone="light">
+    <div class="shell">
+      <h3 class="beat-title" id="decide-title" data-reveal><span>定方向</span>定了，就这一版往下做。</h3>
+      <div class="turn" data-reveal>
+        <div class="talk">
+          <span class="tag">对话示意</span>
+          <p class="msg me">就这一轮最后那张。往下做。</p>
+          <p class="msg arco"><span class="orb" aria-hidden="true"><i></i></span>好。后面的视角和镜头，都拿它当参考图。</p>
+        </div>
+        <div class="work">
+          <ol class="picks" aria-label="七个方向，其中第七个被选定"><li><img src="v8/assets/thumb/landmark-5.webp" alt="方向 1" width="240" height="321" loading="lazy" decoding="async"></li><li><img src="v8/assets/thumb/landmark-6.webp" alt="方向 2" width="240" height="321" loading="lazy" decoding="async"></li><li><img src="v8/assets/thumb/landmark-7.webp" alt="方向 3" width="240" height="321" loading="lazy" decoding="async"></li><li><img src="v8/assets/thumb/landmark-8.webp" alt="方向 4" width="240" height="321" loading="lazy" decoding="async"></li><li><img src="v8/assets/thumb/landmark-9.webp" alt="方向 5" width="240" height="321" loading="lazy" decoding="async"></li><li><img src="v8/assets/thumb/landmark-10.webp" alt="方向 6" width="240" height="321" loading="lazy" decoding="async"></li><li class="is-picked"><img src="v8/assets/thumb/landmark-11.webp" alt="方向 7（选定）" width="240" height="321" loading="lazy" decoding="async"><em>选定</em></li></ol>
+          <p class="decide-lead">七个方向里选了哪一个，后面每一张图画的就是哪座楼。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dusk">
+    <i class="tone-mark" data-tone="dark"></i>
+    <div class="shell">
+      <figure class="chosen" data-reveal>
+        <img src="v8/assets/img/landmark-11.webp" alt="选定的方向：折板裙房过渡为纤细竖向塔楼，阴天，滨水城市背景" width="765" height="1024" loading="lazy" decoding="async">
+        <figcaption><b>选定的方向</b><span>第二段描述 · 第 4 版</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- 深化：同一座楼的八个视角 -->
+<section class="deepen tone-dark" id="task-angles" data-tone="dark" data-stage="angles" aria-labelledby="angles-title">
+  <div class="shell">
+    <h3 class="beat-title" id="angles-title" data-reveal><span>深化</span>楼不变，走近了看。</h3>
+    <div class="turn" data-reveal>
+      <div class="talk">
+        <span class="tag">对话示意</span>
+        <p class="msg me">楼不变。给我滨水、入口、裙房，还有人走在里面的样子。</p>
+        <p class="msg arco"><span class="orb" aria-hidden="true"><i></i></span>八个视角。每一张的参考图，都是你选定的那张。</p>
+        <figure class="mini">
+          <div class="mm" aria-hidden="true"><span class="mm-g" data-i="0"><i>多角度</i></span><span class="mm-g" data-i="1"><i>概念</i></span><span class="mm-g" data-i="2"><i>视频</i></span><span class="mm-p" data-i="3"></span><span class="mm-p" data-i="4"></span><span class="mm-n" data-i="5" data-n="5"><img src="v8/assets/thumb/landmark-5.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n" data-i="6" data-n="6"><img src="v8/assets/thumb/landmark-6.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n" data-i="7" data-n="7"><img src="v8/assets/thumb/landmark-7.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n" data-i="8" data-n="8"><img src="v8/assets/thumb/landmark-8.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n" data-i="9" data-n="9"><img src="v8/assets/thumb/landmark-9.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n" data-i="10" data-n="10"><img src="v8/assets/thumb/landmark-10.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n is-chosen" data-i="11" data-n="11"><img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="12" data-n="12"><img src="v8/assets/thumb/landmark-12.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="13" data-n="13"><img src="v8/assets/thumb/landmark-13.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="14" data-n="14"><img src="v8/assets/thumb/landmark-14.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="15" data-n="15"><img src="v8/assets/thumb/landmark-15.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n is-chosen" data-i="16" data-n="11"><img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n is-chosen" data-i="17" data-n="11"><img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n" data-i="18" data-n="18"><img src="v8/assets/thumb/landmark-18.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n" data-i="19" data-n="19"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-v" data-i="20" data-n="18"><img src="v8/assets/thumb/landmark-18.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-v" data-i="21" data-n="11"><img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="22" data-n="18"><img src="v8/assets/thumb/landmark-18.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="23" data-n="19"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="24" data-n="24"><img src="v8/assets/thumb/landmark-24.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-a" data-i="25" data-n="25"><img src="v8/assets/thumb/landmark-25.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span><span class="mm-n mm-v" data-i="26" data-n="19"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" loading="lazy" decoding="async"></span></div>
+          <figcaption>项目文件里，这些都落在同一张画布上（按原坐标缩小）。</figcaption>
+        </figure>
+      </div>
+      <div class="work">
+        <div class="viewer" data-viewer>
+          <figure class="viewer-main">
+            <img data-viewer-img src="v8/assets/img/landmark-18.webp" alt="滨河步道：人们坐在近水的花岗岩台阶上，旁边停着一艘船" width="765" height="1024" loading="lazy" decoding="async">
+          </figure>
+          <div class="viewer-side">
+            <p class="viewer-ref"><img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>参考图<b>选定的方向</b></span></p>
+            <p class="viewer-name" data-viewer-name>滨河步道</p>
+            <p class="viewer-prompt" data-viewer-prompt>参考图中阶梯式滨河步道的低角度画面。游客坐在近水的花岗岩露台台阶上交谈休憩，附近停靠一艘船。柔和水波，阴天天空，自然抓拍感的建筑生活方式渲染，8K。</p>
+            <div class="viewer-thumbs" role="radiogroup" aria-label="选择视角"><button type="button" role="radio" aria-checked="true" tabindex="0" data-angle="0" aria-label="滨河步道"><img src="v8/assets/thumb/landmark-18.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>滨河步道</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-angle="1" aria-label="滨水阶梯"><img src="v8/assets/thumb/landmark-12.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>滨水阶梯</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-angle="2" aria-label="中庭入口"><img src="v8/assets/thumb/landmark-24.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>中庭入口</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-angle="3" aria-label="入口广场"><img src="v8/assets/thumb/landmark-15.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>入口广场</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-angle="4" aria-label="裙房与塔身"><img src="v8/assets/thumb/landmark-14.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>裙房与塔身</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-angle="5" aria-label="仰视立面"><img src="v8/assets/thumb/landmark-13.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>仰视立面</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-angle="6" aria-label="裙房平台"><img src="v8/assets/thumb/landmark-25.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>裙房平台</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-angle="7" aria-label="街道视角"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>街道视角</span></button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Arco → D5 Render → Arco：联动示意 -->
+<section class="loop tone-dark" id="loop" data-tone="dark" data-stage="loop" aria-labelledby="loop-title">
+  <div class="shell">
+    <header class="sec-head" data-reveal>
+      <h2 id="loop-title"><span class="nb">要做实的时候，</span><span class="nb">去 D5 Render 走一趟，再回来。</span></h2>
+      <p>画面在 Arco 里定下来，模型在你的 D5 Render 工程里。把参考图的布光带过去，在真实场景里做实；再把视口和渲染结果取回 Arco，接着整理。</p>
+    </header>
+
+    <div class="rt" data-rt data-step="0" data-reveal>
+      <div class="rt-steps" role="tablist" aria-label="往返的三步">
+        <button type="button" role="tab" id="rt-tab-0" aria-selected="true" aria-controls="rt-stage" data-rt-go="0"><i>1</i><span><b><span class="nb">在 Arco </span><span class="nb">定下画面</span></b><small>选一张图当参考图</small></span></button>
+        <button type="button" role="tab" id="rt-tab-1" aria-selected="false" aria-controls="rt-stage" tabindex="-1" data-rt-go="1"><i>2</i><span><b><span class="nb">带进 </span><span class="nb">D5 Render</span></b><small>按参考图为场景布光</small></span></button>
+        <button type="button" role="tab" id="rt-tab-2" aria-selected="false" aria-controls="rt-stage" tabindex="-1" data-rt-go="2"><i>3</i><span><b>取回 Arco</b><small>视口回到画布，接着做</small></span></button>
+      </div>
+
+      <div class="rt-stage" id="rt-stage" role="tabpanel" aria-labelledby="rt-tab-0" tabindex="0">
+        <div class="rt-arco">
+          <p class="rt-h"><span class="orb" aria-hidden="true"><i></i></span><b>Arco</b><span>画布</span></p>
+          <div class="rt-tiles">
+            <figure class="rt-tile"><img src="v8/assets/img/landmark-19.webp" alt="街道视角的效果图，作为参考图" width="765" height="1024" loading="lazy" decoding="async"><figcaption>街道视角 · 参考图</figcaption></figure>
+            <figure class="rt-tile rt-tile-back"><svg class="s3d is-lit" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="D5 Render 场景示意：塔楼底部与街道的体块模型，已布光"><defs><linearGradient id="rtb-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#565c6b"/><stop offset="1" stop-color="#868c99"/></linearGradient><linearGradient id="rtb-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101627"/><stop offset=".62" stop-color="#2b3352"/><stop offset="1" stop-color="#7a5a52"/></linearGradient><radialGradient id="rtb-glow"><stop offset="0" stop-color="#ffdca8" stop-opacity=".95"/><stop offset=".35" stop-color="#ffb86a" stop-opacity=".45"/><stop offset="1" stop-color="#ff9d4a" stop-opacity="0"/></radialGradient><linearGradient id="rtb-shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05060c" stop-opacity=".5"/><stop offset="1" stop-color="#05060c" stop-opacity=".34"/></linearGradient></defs><rect width="400" height="250" fill="url(#rtb-sky)"/><rect class="s3d-on" width="400" height="250" fill="url(#rtb-dusk)"/><path d="M262 104h30v70h-30zM296 120h32v54h-32zM332 92h68v82h-68z" fill="#6a7080"/><path d="M262 104h30v4h-30zM296 120h32v4h-32zM332 92h68v4h-68z" fill="#7c8292"/><path d="M0 172h400v78H0z" fill="#4b4f5a"/><path d="M0 250h196l58-78h-18z" fill="#6c717d"/><path d="M196 250h204v-52l-140-26h-6z" fill="#3c3f49"/><g stroke="#fff" stroke-opacity=".1" stroke-width=".8"><path d="M40 250l202-78M90 250l158-78M140 250l111-78"/><path d="M0 232h186M22 214h177M60 198h152M96 186h126"/></g><path d="M22 0h76l26 172H32z" fill="#8b909d"/><path d="M98 0h54l18 172h-46z" fill="#70757f"/><path d="M58 0h40L76 92z" fill="#9ba0ac"/><path d="M124 172l28-112 18 112z" fill="#5f646f"/><path d="M0 118l42 54H0z" fill="#7d828e"/><path d="M152 122l64 28-10 22h-46z" fill="#80858f"/><path d="M170 172l46-22 16 22z" fill="#5c606b"/><path d="M62 172l10-40h34l8 40z" fill="#2a2c34"/><path d="M196 206v25.5" stroke="#565b66" stroke-width="2.8"/><circle cx="196" cy="202.6" r="17" fill="#4a554f"/><circle cx="190.9" cy="198.3" r="10.5" fill="#566158"/><path d="M222 190v16.5" stroke="#565b66" stroke-width="1.8"/><circle cx="222" cy="187.8" r="11" fill="#4a554f"/><circle cx="218.7" cy="185.1" r="6.8" fill="#566158"/><path d="M238 181v10.5" stroke="#565b66" stroke-width="1.2"/><circle cx="238" cy="179.6" r="7" fill="#4a554f"/><circle cx="235.9" cy="177.8" r="4.3" fill="#566158"/><path d="M150 228h30l4 8h-38zM118 204h20l3 6h-26z" fill="#555a65"/><rect class="s3d-on" width="400" height="250" fill="url(#rtb-shade)"/><g class="s3d-on" stroke="#ffcf94" stroke-width="2.2" stroke-dasharray="7 5" stroke-linecap="round" opacity=".9"><path d="M24.5 26H96.9"/><path d="M25.6 44H99.6"/><path d="M26.6 62H102.4"/><path d="M27.6 80H105.1"/><path d="M28.7 98H107.8"/><path d="M29.7 116H110.5"/><path d="M104.1 34H150.6"/><path d="M107.8 58H153.1"/><path d="M111.4 82H155.6"/><path d="M115.0 106H158.1"/><path d="M118.6 130H160.7"/></g><path class="s3d-on" d="M62 172l10-40h34l8 40z" fill="#ffd9a3"/><ellipse class="s3d-on" cx="88" cy="186" rx="52" ry="12" fill="url(#rtb-glow)"/><ellipse class="s3d-on" cx="168" cy="230" rx="50" ry="11" fill="url(#rtb-glow)"/><ellipse class="s3d-on" cx="214" cy="200" rx="30" ry="7" fill="url(#rtb-glow)"/><path d="M170 150v78" stroke="#8d92a0" stroke-width="1.2"/><circle cx="170" cy="150" r="26" fill="url(#rtb-glow)" class="s3d-on"/><circle cx="170" cy="150" r="2.9" fill="#fff3dc" class="s3d-on"/><path d="M210 158v40" stroke="#8d92a0" stroke-width="1.2"/><circle cx="210" cy="158" r="16" fill="url(#rtb-glow)" class="s3d-on"/><circle cx="210" cy="158" r="1.8" fill="#fff3dc" class="s3d-on"/><path d="M230 163v20" stroke="#8d92a0" stroke-width="1.2"/><circle cx="230" cy="163" r="10" fill="url(#rtb-glow)" class="s3d-on"/><circle cx="230" cy="163" r="1.6" fill="#fff3dc" class="s3d-on"/></svg><figcaption>当前视口</figcaption></figure>
+          </div>
+          <ul class="rt-feats" aria-label="可以带进 D5 Render 的三种做法">
+            <li class="is-on"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sun"/></svg>为 3D 场景布光</li>
+            <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-imagestar"/></svg>3D 场景匹配图片氛围</li>
+            <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-axis"/></svg>布置 3D 场景</li>
+          </ul>
+          <p class="rt-line rt-line-0"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>使用当前参考图</p>
+          <p class="rt-line rt-line-2"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>当前视口已添加到画布</p>
+        </div>
+
+        <div class="rt-wires" aria-hidden="true">
+          <div class="rt-wire rt-go"><span>参考图的布光效果</span><i></i></div>
+          <div class="rt-wire rt-back"><i></i><span>当前视口 · 渲染结果</span></div>
+        </div>
+
+        <div class="rt-render">
+          <p class="rt-h"><b>D5 Render</b><span>工程窗口示意</span></p>
+          <div class="rt-view"><svg class="s3d" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="D5 Render 场景示意：塔楼底部与街道的体块模型"><defs><linearGradient id="rta-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#565c6b"/><stop offset="1" stop-color="#868c99"/></linearGradient><linearGradient id="rta-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#101627"/><stop offset=".62" stop-color="#2b3352"/><stop offset="1" stop-color="#7a5a52"/></linearGradient><radialGradient id="rta-glow"><stop offset="0" stop-color="#ffdca8" stop-opacity=".95"/><stop offset=".35" stop-color="#ffb86a" stop-opacity=".45"/><stop offset="1" stop-color="#ff9d4a" stop-opacity="0"/></radialGradient><linearGradient id="rta-shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#05060c" stop-opacity=".5"/><stop offset="1" stop-color="#05060c" stop-opacity=".34"/></linearGradient></defs><rect width="400" height="250" fill="url(#rta-sky)"/><rect class="s3d-on" width="400" height="250" fill="url(#rta-dusk)"/><path d="M262 104h30v70h-30zM296 120h32v54h-32zM332 92h68v82h-68z" fill="#6a7080"/><path d="M262 104h30v4h-30zM296 120h32v4h-32zM332 92h68v4h-68z" fill="#7c8292"/><path d="M0 172h400v78H0z" fill="#4b4f5a"/><path d="M0 250h196l58-78h-18z" fill="#6c717d"/><path d="M196 250h204v-52l-140-26h-6z" fill="#3c3f49"/><g stroke="#fff" stroke-opacity=".1" stroke-width=".8"><path d="M40 250l202-78M90 250l158-78M140 250l111-78"/><path d="M0 232h186M22 214h177M60 198h152M96 186h126"/></g><path d="M22 0h76l26 172H32z" fill="#8b909d"/><path d="M98 0h54l18 172h-46z" fill="#70757f"/><path d="M58 0h40L76 92z" fill="#9ba0ac"/><path d="M124 172l28-112 18 112z" fill="#5f646f"/><path d="M0 118l42 54H0z" fill="#7d828e"/><path d="M152 122l64 28-10 22h-46z" fill="#80858f"/><path d="M170 172l46-22 16 22z" fill="#5c606b"/><path d="M62 172l10-40h34l8 40z" fill="#2a2c34"/><path d="M196 206v25.5" stroke="#565b66" stroke-width="2.8"/><circle cx="196" cy="202.6" r="17" fill="#4a554f"/><circle cx="190.9" cy="198.3" r="10.5" fill="#566158"/><path d="M222 190v16.5" stroke="#565b66" stroke-width="1.8"/><circle cx="222" cy="187.8" r="11" fill="#4a554f"/><circle cx="218.7" cy="185.1" r="6.8" fill="#566158"/><path d="M238 181v10.5" stroke="#565b66" stroke-width="1.2"/><circle cx="238" cy="179.6" r="7" fill="#4a554f"/><circle cx="235.9" cy="177.8" r="4.3" fill="#566158"/><path d="M150 228h30l4 8h-38zM118 204h20l3 6h-26z" fill="#555a65"/><rect class="s3d-on" width="400" height="250" fill="url(#rta-shade)"/><g class="s3d-on" stroke="#ffcf94" stroke-width="2.2" stroke-dasharray="7 5" stroke-linecap="round" opacity=".9"><path d="M24.5 26H96.9"/><path d="M25.6 44H99.6"/><path d="M26.6 62H102.4"/><path d="M27.6 80H105.1"/><path d="M28.7 98H107.8"/><path d="M29.7 116H110.5"/><path d="M104.1 34H150.6"/><path d="M107.8 58H153.1"/><path d="M111.4 82H155.6"/><path d="M115.0 106H158.1"/><path d="M118.6 130H160.7"/></g><path class="s3d-on" d="M62 172l10-40h34l8 40z" fill="#ffd9a3"/><ellipse class="s3d-on" cx="88" cy="186" rx="52" ry="12" fill="url(#rta-glow)"/><ellipse class="s3d-on" cx="168" cy="230" rx="50" ry="11" fill="url(#rta-glow)"/><ellipse class="s3d-on" cx="214" cy="200" rx="30" ry="7" fill="url(#rta-glow)"/><path d="M170 150v78" stroke="#8d92a0" stroke-width="1.2"/><circle cx="170" cy="150" r="26" fill="url(#rta-glow)" class="s3d-on"/><circle cx="170" cy="150" r="2.9" fill="#fff3dc" class="s3d-on"/><path d="M210 158v40" stroke="#8d92a0" stroke-width="1.2"/><circle cx="210" cy="158" r="16" fill="url(#rta-glow)" class="s3d-on"/><circle cx="210" cy="158" r="1.8" fill="#fff3dc" class="s3d-on"/><path d="M230 163v20" stroke="#8d92a0" stroke-width="1.2"/><circle cx="230" cy="163" r="10" fill="url(#rta-glow)" class="s3d-on"/><circle cx="230" cy="163" r="1.6" fill="#fff3dc" class="s3d-on"/></svg></div>
+          <p class="rt-status" aria-hidden="true">
+            <span class="rs rs-0">已关联 · 等待操作</span>
+            <span class="rs rs-1a">正在将灯光写入 D5 场景</span>
+            <span class="rs rs-1b">灯光已应用</span>
+            <span class="rs rs-2">获取当前视口</span>
+          </p>
+        </div>
+      </div>
+
+      <p class="rt-caption" data-rt-caption aria-live="polite">在 Arco：街道视角的画面定了。选「为 3D 场景布光」，把这张图当作参考图。</p>
+      <span class="rt-tag">联动示意</span>
+    </div>
+    <p class="note" data-reveal>联动示意，不是实际操作录屏。步骤和界面文案取自 Arco 客户端 0.10.1；D5 Render 窗口为网页绘制，不代表实际渲染结果。需要本机已打开 D5 Render 工程；按该版本客户端的说明，D5 Render 连接目前仅在 Windows 上可用。可用范围以发布版本为准。</p>
+  </div>
+</section>
+
+<!-- 表达：回到 Arco，镜头与汇报 -->
+<section class="express tone-dark" id="express" data-tone="dark" data-stage="express" aria-labelledby="express-title">
+  <div class="shell">
+    <h3 class="beat-title" id="express-title" data-reveal><span>表达</span>回到 Arco，做成镜头和汇报。</h3>
+
+    <div class="turn" data-reveal>
+      <div class="talk">
+        <span class="tag">对话示意</span>
+        <p class="msg me">想要一段镜头。</p>
+        <p class="msg arco"><span class="orb" aria-hidden="true"><i></i></span>从哪张图起？首帧不同，出来的镜头也不同。</p>
+        <div class="pick" role="radiogroup" aria-label="选择起镜头的图" data-clip-pick><button type="button" role="radio" aria-checked="true" tabindex="0" data-clip="0"><img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span><b>选定的方向</b>FPV 穿行 · 15 秒</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip="1"><img src="v8/assets/thumb/landmark-18.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span><b>滨河步道</b>滨水延时 · 5 秒</span></button><button type="button" role="radio" aria-checked="false" tabindex="-1" data-clip="2"><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span><b>街道视角</b>日转夜 · 15 秒</span></button></div>
+        <p class="msg me" data-clip-echo>从选定的那张起，飞过去看。</p>
+      </div>
+      <div class="work">
+        <div class="player" data-player>
+          <div class="player-frame">
+            <video data-clip-video="0" class="is-on" playsinline muted loop preload="none" controls poster="v8/assets/poster/landmark-21.webp" src="v8/media/landmark-21.mp4" width="834" height="1112" aria-label="视频：FPV 穿行，15 秒，无声">当前浏览器无法播放这段视频。</video>
+            <video data-clip-video="1" playsinline muted loop preload="none" controls poster="v8/assets/poster/landmark-20.webp" src="v8/media/landmark-20.mp4" width="1244" height="1664" aria-label="视频：滨水延时，5 秒，无声">当前浏览器无法播放这段视频。</video>
+            <video data-clip-video="2" playsinline muted loop preload="none" controls poster="v8/assets/poster/landmark-26.webp" src="v8/media/landmark-26.mp4" width="834" height="1112" aria-label="视频：日转夜，15 秒，无声">当前浏览器无法播放这段视频。</video>
+            <button type="button" class="player-toggle" data-player-toggle aria-label="播放：FPV 穿行" aria-pressed="false"><span class="player-btn"><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></span></button>
+            <div class="player-hud">
+              <p class="player-meta"><strong data-player-title>FPV 穿行</strong><span data-player-secs>15 秒</span></p>
+              <div class="player-ctrl">
+                <input type="range" class="player-seek" data-player-seek min="0" max="1000" value="0" step="1" aria-label="播放进度">
+                <span class="player-time" data-player-time aria-hidden="true">0:00</span>
+                <button type="button" class="player-fs" data-player-fs aria-label="全屏播放"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cornersout"/></svg></button>
+              </div>
+            </div>
+            <p class="player-error" data-player-error hidden>视频未能加载，显示的是首帧画面。</p>
+          </div>
+          <div class="player-side">
+            <p class="player-from"><img data-player-from-img src="v8/assets/thumb/landmark-11.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><span>首帧<b data-player-from>选定的方向</b></span></p>
+            <p class="player-prompt-h">这段镜头的要求</p>
+            <p class="player-prompt" data-player-prompt>使用提供的图片作为精确首帧，制作一段 15 秒电影感 FPV 无人机视频。保持塔楼几何、立面结构、棱角分明的裙房，以及周边城市、河流和桥梁。 0–4 秒：平滑加速飞向塔楼，接近右侧立面。钢制翼片与斜向支撑逐渐放大，产生强烈自然视差。 4–9 秒：镜头向下俯仰，沿立面受控俯冲至棱角分明的裙房，始终与建筑保持明确距离。立面细节保持清晰，结构一致。 9–12 秒：平滑向右侧倾转弯，绕过裙房外角，显露滨水步道。在步道上方飞行，避开行人、树木和路灯。 12–15 秒：向外掠过河面，轻柔转回塔楼，最终以富有张力的建筑与滨水广角画面结束。 单个连续流畅的镜头，加速度可信，侧倾克制。冷蓝灰色调，富有戏剧性的阴天日光，真实反射，适度运动模糊。无剪切、瞬移、突变速度、建筑变形，或穿过实体结构的飞行。</p>
+            <p class="player-remark note" data-player-remark hidden></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="turn" data-reveal>
+      <div class="talk">
+        <p class="msg me">再把这些整理成一页汇报。</p>
+        <p class="msg arco"><span class="orb" aria-hidden="true"><i></i></span>整理成展示页，图和说明都取自前面的内容。</p>
+      </div>
+      <div class="work">
+        <figure class="board">
+          <div class="board-paper">
+            <p class="board-kicker"><span>超高层地标 · 方案汇报</span><em>版式示意</em></p>
+            <p class="board-title">折板裙房，托起一座纤细的塔</p>
+            <div class="board-grid">
+              <img class="board-main" src="v8/assets/img/landmark-11.webp" alt="选定的概念图" width="765" height="1024" loading="lazy" decoding="async">
+              <ul class="board-rows">
+                <li><img src="v8/assets/thumb/landmark-12.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><p><b>滨水</b>花岗岩阶梯座席结合种植池，逐级下降到水边。</p></li>
+                <li><img src="v8/assets/thumb/landmark-15.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><p><b>入口</b>折面混凝土雨棚，通向玻璃大堂。</p></li>
+                <li><img src="v8/assets/thumb/landmark-19.webp" alt="" width="240" height="321" loading="lazy" decoding="async"><p><b>街道</b>树池与街椅之上，是金属百叶的塔身。</p></li>
+              </ul>
+            </div>
+            <p class="board-foot">附：三段镜头<span>FPV 穿行 15 秒</span><span>滨水延时 5 秒</span><span>日转夜 15 秒</span></p>
+          </div>
+          <figcaption class="note">汇报版式示意：版式为网页排版，图片与描述取自同一官方演示项目。</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 4. 收尾：从你手上的那件事开始 ===================== -->
+<section class="start tone-dark" id="start" data-tone="dark" aria-labelledby="start-title">
+  <div class="start-bg" aria-hidden="true"></div>
+  <div class="shell">
+    <header class="sec-head sec-head-center" data-reveal>
+      <h2 id="start-title"><span class="nb">从你手上的</span><span class="nb">那件事开始。</span></h2>
+      <p>选一个最像的起点，得到一段可以直接对 Arco 说的话。</p>
+    </header>
+
+    <div class="builder" data-builder data-reveal>
+      <div class="b-in">
+        <div class="b-row">
+          <p class="b-label" id="who-label">你现在的情况</p>
+          <div class="seg" role="radiogroup" aria-labelledby="who-label">
+            <button type="button" role="radio" aria-checked="true" data-who="new">刚开始用 AI 做设计</button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-who="render">已经在用 D5 Render</button>
+          </div>
+        </div>
+        <div class="b-row">
+          <p class="b-label" id="have-label">手上有什么<span>可多选</span></p>
+          <div class="have" role="group" aria-labelledby="have-label">
+            <button type="button" aria-pressed="false" data-have="场地照片">场地照片</button>
+            <button type="button" aria-pressed="false" data-have="设计稿">设计稿</button>
+            <button type="button" aria-pressed="false" data-have="PPT">PPT</button>
+            <button type="button" aria-pressed="false" data-have="PDF">PDF</button>
+            <button type="button" aria-pressed="false" data-have="文档">文档</button>
+            <button type="button" aria-pressed="false" data-have="打开的 D5 Render 工程" data-have-render hidden>打开的 D5 Render 工程</button>
+          </div>
+        </div>
+        <div class="b-row">
+          <p class="b-label" id="task-label">想先做哪件事</p>
+          <div class="tasks" role="radiogroup" aria-labelledby="task-label" data-tasks="new"><button type="button" role="radio" aria-checked="false" tabindex="0" data-task="brief"><strong>任务书解读</strong><span>解读任务书，梳理场地与概念方向</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="garden"><strong>花园方案</strong><span>从场地分析到平面与植物配置</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="report"><strong>设计汇报</strong><span>生成可演示的汇报网页</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="bid"><strong>投标文本</strong><span>按章节编写技术标正式文本</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="check"><strong>规划自检</strong><span>对照规范检查核心指标</span></button></div>
+          <div class="tasks" role="radiogroup" aria-labelledby="task-label" data-tasks="render" hidden><button type="button" role="radio" aria-checked="false" tabindex="0" data-task="light"><strong>为 3D 场景布光</strong><span>按参考图的布光效果摆放人工光</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="mood"><strong>3D 场景匹配图片氛围</strong><span>为视口匹配环境与效果</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="place"><strong>布置 3D 场景</strong><span>推荐、搭配素材并布置</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="viewport"><strong>把视口带回画布</strong><span>取回当前视口，接着往下做</span></button>
+            <button type="button" role="radio" aria-checked="false" tabindex="-1" data-task="result"><strong>把渲染结果做成汇报</strong><span>导入渲染结果，和前面的图一起整理</span></button></div>
+        </div>
+      </div>
+
+      <div class="b-out">
+        <div class="composer" data-composer>
+          <p class="composer-have" data-composer-have hidden><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrowoutup"/></svg><span>一并带上：</span><b data-composer-have-list></b></p>
+          <label class="sr-only" for="composer-text">要对 Arco 说的话</label>
+          <textarea id="composer-text" data-composer-text rows="4" placeholder="输入消息...  也可以直接写下你手上的那件事" spellcheck="false"></textarea>
+          <div class="composer-bar">
+            <span class="composer-tools" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-add"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-at"/></svg></span>
+            <p class="composer-status" data-composer-status role="status"></p>
+            <button type="button" class="btn btn-primary btn-sm" data-composer-copy><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg>复制这段话</button>
+          </div>
+        </div>
+        <div class="said" data-said hidden>
+          <p class="said-h">这句话交代了 <b data-said-n>3</b> 件事</p>
+          <ol data-said-list></ol>
+        </div>
+        <p class="b-hint" data-b-hint>先在左边选一件事，或者直接在上面写。</p>
+      </div>
+    </div>
+
+    <ol class="start-plain" aria-label="可以直接对 Arco 说的几句话"><li><b>任务书解读</b><span>解读设计任务书，提取关键指标和约束条件，梳理场地现状，输出多方向概念建议。</span></li><li><b>花园方案</b><span>协助设计庭院花园方案，从场地分析到概念效果图、平面布局、植物配置逐步推进。</span></li><li><b>设计汇报</b><span>将项目调研和设计分析整合为可直接演示的汇报网页，包含数据可视化、指标卡片和主视觉。</span></li><li><b>投标文本</b><span>根据招标评分表按章节编写技术标文本，逐条响应评分项，生成正式方案设计说明。</span></li><li><b>规划自检</b><span>检查规划方案中容积率、建筑密度、绿地率、日照间距等核心指标是否满足规范要求。</span></li></ol>
+
+    <div class="get" id="get" data-reveal>
+      <img class="get-icon" src="v8/assets/brand.webp" alt="" width="72" height="72">
+      <h3>带着这段话，打开 Arco。</h3>
+      <div class="get-cta" data-download>
+        <button type="button" class="btn btn-glass" data-platform="windows" data-href="">下载 Windows 版</button>
+        <button type="button" class="btn btn-glass" data-platform="macos" data-href="">下载 macOS 版</button>
+      </div>
+      <p class="get-status" data-download-status role="status">演示版本：下载入口尚未接入。</p>
+    </div>
+    <p class="note note-center" data-reveal>输入框为示意，不会发送任何内容。「刚开始用 AI 做设计」下的任务和说法取自 Arco 客户端 0.10.1；「已经在用 D5 Render」下的说法是为演示写的例句，需要本机已打开 D5 Render 工程，可用范围以发布版本为准。</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer tone-dark" data-tone="dark">
+  <div class="shell footer-in">
+    <div class="footer-brand">
+      <a class="brand" href="#top" aria-label="回到页面顶部"><img src="v8/assets/brand.webp" alt="" width="28" height="28"><span>D5 Arco</span></a>
+      <p>建筑与空间设计的 AI Agent。</p>
+    </div>
+    <nav class="footer-nav" aria-label="页脚导航">
+      <a href="#place">在 D5 中的位置</a>
+      <a href="#task">一件任务</a>
+      <a href="#loop">与 D5 Render 往返</a>
+      <a href="#start">从哪开始</a>
+      <a href="#get">获取 Arco</a>
+    </nav>
+  </div>
+  <div class="shell footer-base">
+    <span>D5 Arco · Dimension 5 Techs.</span>
+    <span>演示版本 · V8 · 2026-11-12 · 不是正式官网</span>
+  </div>
+</footer>
+
+<script type="application/json" id="v8-data">{"film":{"captions":["一句还没说完整的要求，就可以开始。","方向没定，先摆几版出来，一起比。","定了一版，接着出视角，出镜头。","要做实，带进 D5 Render，再把结果带回来。","最后整理成一页能讲的汇报。"],"tags":["网页动态演示 · 对话示意","网页动态演示 · 对话示意","网页动态演示 · 对话示意","网页动态演示 · 联动示意","网页动态演示 · 版式示意"],"dur":[6400,7800,7200,8600,7400],"cover":"一件任务，从一句话到一页汇报。","coverTag":"网页动态演示","coverDur":2600},"dock":{"place":"方向没定，也可以先开口。","explore":"方向没定？先摆几版出来看。","decide":"定了这一版，后面都按它来。","angles":"楼不变，换个视角走近看。","loop":"要做实，去 D5 Render 走一趟。","express":"回来了。做成镜头和汇报。"},"angles":[{"n":"18","name":"滨河步道","prompt":"参考图中阶梯式滨河步道的低角度画面。游客坐在近水的花岗岩露台台阶上交谈休憩，附近停靠一艘船。柔和水波，阴天天空，自然抓拍感的建筑生活方式渲染，8K。","alt":"滨河步道：人们坐在近水的花岗岩台阶上，旁边停着一艘船"},{"n":"12","name":"滨水阶梯","prompt":"参考图中阶梯式滨水边缘的低角度特写。花岗岩阶梯座席露台结合低矮绿色种植池，逐级下降至深色河水边。漂浮的木质游艇码头，简洁的栏杆细节，前景为轻柔泛起涟漪的水面，阴天天空，8K。","alt":"滨水阶梯：座席露台和种植池逐级下降到河边"},{"n":"24","name":"中庭入口","prompt":"参考图中地面入口广场的平视特写。聚焦以原始质感折面混凝土折板框起的内凹玻璃中庭入口。干净的几何接缝，现代室外向下照明，抛光石材广场铺地，阴天氛围，建筑摄影，8K。","alt":"中庭入口：折面混凝土框起内凹的玻璃入口"},{"n":"15","name":"入口广场","prompt":"参考图中入口广场的平视特写。身着极简现代服饰的商务人士走过巨大的折面混凝土雨棚，前往玻璃大堂。抛光石材铺地，阴天柔和日光，建筑生活方式摄影，8K。","alt":"入口广场：行人走过折面混凝土雨棚，前往玻璃大堂"},{"n":"14","name":"裙房与塔身","prompt":"参考图中折面混凝土裙房与竖向塔身衔接处的平视细部。深邃的建筑阴影缝、棱角分明的檐底、玻璃入口门洞、精致的现代材质表现，建筑可视化，8K。","alt":"裙房与塔身衔接处的平视细部"},{"n":"13","name":"仰视立面","prompt":"参考图中沿塔楼立面垂直向上看的动态极端仰视视角。线性竖向金属百叶向天空延伸收束，与三角形折面玻璃幕墙形成对比，尺度感强烈，高对比度单色影调，8K。","alt":"沿塔楼立面垂直向上的仰视"},{"n":"25","name":"裙房平台","prompt":"参考图中裙房景观平台上的中景。人们在户外咖啡桌旁交谈，倚靠玻璃栏板俯瞰河流，画面被深色棱角立面悬挑部分框住，8K。","alt":"裙房平台：人们在户外咖啡桌旁交谈，俯瞰河流"},{"n":"19","name":"街道视角","prompt":"沿参考图周边人行道的街道视角。行人漫步经过整齐的树池和现代街椅，上方是金属百叶塔楼笔直高耸的竖向体量，自然的城市氛围，8K。","alt":"街道视角：行人经过树池和街椅，上方是金属百叶塔楼"}],"clips":[{"id":"21","title":"FPV 穿行","secs":15,"from":"11","fromName":"选定的方向","prompt":"使用提供的图片作为精确首帧，制作一段 15 秒电影感 FPV 无人机视频。保持塔楼几何、立面结构、棱角分明的裙房，以及周边城市、河流和桥梁。 0–4 秒：平滑加速飞向塔楼，接近右侧立面。钢制翼片与斜向支撑逐渐放大，产生强烈自然视差。 4–9 秒：镜头向下俯仰，沿立面受控俯冲至棱角分明的裙房，始终与建筑保持明确距离。立面细节保持清晰，结构一致。 9–12 秒：平滑向右侧倾转弯，绕过裙房外角，显露滨水步道。在步道上方飞行，避开行人、树木和路灯。 12–15 秒：向外掠过河面，轻柔转回塔楼，最终以富有张力的建筑与滨水广角画面结束。 单个连续流畅的镜头，加速度可信，侧倾克制。冷蓝灰色调，富有戏剧性的阴天日光，真实反射，适度运动模糊。无剪切、瞬移、突变速度、建筑变形，或穿过实体结构的飞行。","echo":"从选定的那张起，飞过去看。","remark":""},{"id":"20","title":"滨水延时","secs":5,"from":"18","fromName":"滨河步道","prompt":"使用提供的图片作为首帧，制作一段 15 秒固定机位的建筑滨水延时视频。严格保持构图、透视、裁切，以及建筑、台阶、河岸和桥梁的位置。相机完全静止，不变焦、不平移、不俯仰、不旋转。 厚重云层快速掠过天空。日光透过云隙逐渐变亮、变暗，对应反射随之在玻璃立面上移动。台阶上的人自然起身、驻足、交谈和离开，行人沿步道快速行走，带有轻微的长曝光运动拖影。河水涟漪快速变化，倒影闪烁。停泊的白色游艇保持原位并轻轻起伏，远处车辆加速驶过桥梁。 保持冷蓝灰色的阴天氛围。建筑和台阶始终清晰稳定，通过加速的环境活动体现时间流逝。照片级真实感，单个连续镜头，曝光过渡平滑，无闪烁、几何变形或人物瞬移。","echo":"从滨河步道那张起。机位不动，看时间过去。","remark":"这段的要求写的是 15 秒，项目里的视频文件实际是 5 秒。"},{"id":"26","title":"日转夜","secs":15,"from":"19","fromName":"街道视角","prompt":"使用提供的图片作为首帧，制作一段 15 秒固定机位的城市日转夜延时视频。严格保持构图、透视、裁切，以及所有建筑和街道设施的位置。相机完全静止。 0–5 秒：雨后的阴天日景。云层快速移动，行人与车辆加速通过，湿润铺地保留柔和反射。 5–10 秒：日光平滑经过黄昏进入蓝调时刻。天空逐渐变暗，室内灯、入口照明和路灯依次点亮，在湿润铺地上投下暖色反射。 10–15 秒：进入深蓝夜景。办公窗户呈现不同的亮灯分布，现有照明细腻勾勒金属立面结构。车辆沿道路形成白色和红色长曝光光轨，行人留下轻微运动拖影。 光照与天空色彩连续演变，无突兀跳变。建筑、树木、种植池和长椅保持稳定清晰。玻璃与铺地反射始终与实际光源一致。照片级真实的建筑延时摄影，单个连续镜头，无相机运动、曝光闪烁、几何变形或新增建筑。","echo":"从街道那张起。机位不动，从白天到夜里。","remark":""}],"rt":["在 Arco：街道视角的画面定了。选「为 3D 场景布光」，把这张图当作参考图。","在 D5 Render：按参考图的布光效果，为你打开的工程摆放人工光。","回到 Arco：取回当前视口，放到画布上，和前面的图一起接着整理。"],"tasks":{"new":[{"id":"brief","label":"任务书解读","desc":"解读任务书，梳理场地与概念方向","text":"解读设计任务书，提取关键指标和约束条件，梳理场地现状，输出多方向概念建议","parts":[["要做的事","解读设计任务书"],["要它看什么","关键指标、约束条件、场地现状"],["想要的结果","多方向概念建议"]]},{"id":"garden","label":"花园方案","desc":"从场地分析到平面与植物配置","text":"协助设计庭院花园方案，从场地分析到概念效果图、平面布局、植物配置逐步推进","parts":[["要做的事","设计庭院花园方案"],["怎么推进","从场地分析开始，逐步推进"],["想要的结果","概念效果图、平面布局、植物配置"]]},{"id":"report","label":"设计汇报","desc":"生成可演示的汇报网页","text":"将项目调研和设计分析整合为可直接演示的汇报网页，包含数据可视化、指标卡片和主视觉","parts":[["用什么做","项目调研和设计分析"],["做成什么","可直接演示的汇报网页"],["里面要有","数据可视化、指标卡片、主视觉"]]},{"id":"bid","label":"投标文本","desc":"按章节编写技术标正式文本","text":"根据招标评分表按章节编写技术标文本，逐条响应评分项，生成正式方案设计说明","parts":[["依据","招标评分表"],["要做的事","按章节编写技术标文本，逐条响应评分项"],["想要的结果","正式方案设计说明"]]},{"id":"check","label":"规划自检","desc":"对照规范检查核心指标","text":"检查规划方案中容积率、建筑密度、绿地率、日照间距等核心指标是否满足规范要求","parts":[["查什么","规划方案"],["哪些指标","容积率、建筑密度、绿地率、日照间距"],["按什么标准","是否满足规范要求"]]}],"render":[{"id":"light","label":"为 3D 场景布光","desc":"按参考图的布光效果摆放人工光","text":"关联我打开的 D5 Render 工程，按这张参考图的布光效果，为场景布光","parts":[["在哪做","我打开的 D5 Render 工程"],["参照什么","这张参考图的布光效果"],["要做的事","为场景布光"]]},{"id":"mood","label":"3D 场景匹配图片氛围","desc":"为视口匹配环境与效果","text":"关联我打开的 D5 Render 工程，按这张图的氛围，为当前视口匹配环境与效果","parts":[["在哪做","我打开的 D5 Render 工程"],["参照什么","这张图的氛围"],["要做的事","为当前视口匹配环境与效果"]]},{"id":"place","label":"布置 3D 场景","desc":"推荐、搭配素材并布置","text":"关联我打开的 D5 Render 工程，按这张图推荐和搭配素材，布置场景","parts":[["在哪做","我打开的 D5 Render 工程"],["参照什么","这张图"],["要做的事","推荐和搭配素材，布置场景"]]},{"id":"viewport","label":"把视口带回画布","desc":"取回当前视口，接着往下做","text":"获取 D5 Render 的当前视口，放到画布上，我接着往下做","parts":[["从哪取","D5 Render 的当前视口"],["放到哪","画布上"],["然后","我接着往下做"]]},{"id":"result","label":"把渲染结果做成汇报","desc":"导入渲染结果，和前面的图一起整理","text":"把 D5 Render 里的渲染结果导入画布，和前面的图一起整理成一页汇报","parts":[["用什么做","D5 Render 里的渲染结果"],["放到哪","导入画布，和前面的图放在一起"],["想要的结果","一页汇报"]]}]}}</script>
+</body>
+</html>

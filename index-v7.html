@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src 'self' file: data:; media-src 'self' file:; style-src 'self' file:; script-src 'self' file:; font-src 'self' file:; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="description" content="D5 Arco，面向建筑与空间设计的 AI Agent。方向没定时一起推敲，想定之后在同一张画布上接着做出视角、图纸和视频。">
+<meta name="theme-color" content="#0c0c10">
+<meta name="color-scheme" content="dark">
+<title>D5 Arco｜建筑与空间设计的 AI Agent</title>
+<link rel="icon" href="v7/assets/brand.webp">
+<link rel="stylesheet" href="v7/page.css">
+<link rel="stylesheet" href="v7/generated.css">
+<script defer src="v7/page.js"></script>
+</head>
+<body>
+<svg class="sprite" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false"><symbol id="i-add" viewBox="0 0 16 16"><g><path fill="currentColor" d="M8.5 2a.5.5 0 0 0-1 0v5.5H2a.5.5 0 0 0 0 1h5.5V14a.5.5 0 0 0 1 0V8.5H14a.5.5 0 0 0 0-1H8.5V2z"/></g></symbol><symbol id="i-arrowclock" viewBox="0 0 16 16"><g><path fill="currentColor" d="M4.364 4.167H3.169A6.167 6.167 0 1 1 1.833 8a.5.5 0 0 0-1 0A7.167 7.167 0 1 0 2.44 3.478V2.242a.5.5 0 1 0-1 0v2.425a.5.5 0 0 0 .5.5h2.425a.5.5 0 0 0 0-1z"/><path fill="currentColor" d="M8.502 4a.5.5 0 0 0-1 0v4.003a.5.5 0 0 0 .146.353l2.826 2.827a.5.5 0 1 0 .707-.707l-2.68-2.68V4z"/></g></symbol><symbol id="i-arrowoutup" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M7.646 2.146a.5.5 0 0 1 .708 0l2.5 2.5a.5.5 0 0 1-.708.708L8.5 3.707V9.5a.5.5 0 0 1-1 0V3.707L5.854 5.354a.5.5 0 1 1-.708-.708l2.5-2.5ZM2.5 9a.5.5 0 0 1 .5.5V13h10V9.5a.5.5 0 0 1 1 0V13a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V9.5a.5.5 0 0 1 .5-.5Z" fill="currentColor"/></g></symbol><symbol id="i-arrowup" viewBox="0 0 16 16"><g><path d="M8 13.5v-11m0 0L3.5 7M8 2.5 12.5 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-at" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M6.927 2.606A5.5 5.5 0 0 1 13.5 8c0 .643-.118 1.162-.33 1.504-.195.312-.475.496-.92.496-.445 0-.725-.184-.92-.496C11.119 9.162 11 8.643 11 8V5.5a.5.5 0 0 0-1 0v.264a3 3 0 1 0 .372 4.073c.034.067.07.132.11.195.368.593.963.968 1.768.968s1.4-.375 1.768-.968c.35-.563.482-1.294.482-2.032A6.5 6.5 0 1 0 8 14.5c1.313 0 2.735-.39 3.777-1.084a.5.5 0 1 0-.554-.832c-.859.57-2.083.916-3.223.916A5.5 5.5 0 0 1 6.927 2.606ZM6 8a2 2 0 1 1 4 0 2 2 0 0 1-4 0Z" fill="currentColor"/></g></symbol><symbol id="i-bookopentext" viewBox="0 0 32 32"><g><path d="M16 11a4 4 0 0 1 4-4h9v18h-9a4 4 0 0 0-4 4M3 25h9a4 4 0 0 1 4 4V11a4 4 0 0 0-4-4H3v18Zm17-13h5m-5 4h5m-5 4h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-chevrondown" viewBox="0 0 16 16"><g><path fill="currentColor" d="M4.146 6.646a.5.5 0 0 1 .708 0L8 9.793l3.146-3.147a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 0 1 0-.708z" clip-rule="evenodd" fill-rule="evenodd"/></g></symbol><symbol id="i-close" viewBox="0 0 16 16"><g><path stroke-linejoin="round" stroke-linecap="round" stroke="currentColor" d="m3.5 3.5 9 9m0-9-9 9"/></g></symbol><symbol id="i-comment" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M4.284 3.162a6.1 6.1 0 1 1 .861 10.228l-1.973.658a.966.966 0 0 1-1.222-1.222l.66-1.971a6.1 6.1 0 0 1 1.674-7.693Zm4.048-.251a5.1 5.1 0 0 0-4.746 7.644.5.5 0 0 1 .042.409l-.709 2.115 2.118-.707a.5.5 0 0 1 .409.042A5.1 5.1 0 1 0 8.332 2.91Z" fill="currentColor"/></g></symbol><symbol id="i-cornersout" viewBox="0 0 32 32"><g><path d="M21 6h5v5M11 26H6v-5m20 0v5h-5M6 11V6h5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-foldervertical" viewBox="0 0 32 32"><g><path d="m18 17.5 4.793-6.23a1 1 0 0 0 .207-.61V5a1 1 0 0 0-1-1h-4m0 13.5V27a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h11m0 13.5V4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M23.5 8H25a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1h-9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-frame" viewBox="0 0 16 16"><g><path d="M2 3.5h12m-10.5-2v13m-1.5-2h12m-1.5-11v13" stroke="currentColor" stroke-linecap="round"/></g></symbol><symbol id="i-framecorners" viewBox="0 0 32 32"><g><path d="M20 10h4v4m-12 8H8v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M27 6H5a1 1 0 0 0-1 1v18a1 1 0 0 0 1 1h22a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-hand" viewBox="0 0 32 32"><g><path d="M21 9.5a2.5 2.5 0 0 1 5 0V19a9.999 9.999 0 0 1-10 10c-5.523 0-7.594-2.66-11.665-11.25a2.5 2.5 0 0 1 4.33-2.5L11 19V7.5a2.5 2.5 0 0 1 5 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 15V5.5a2.5 2.5 0 0 1 5 0V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-housesimple" viewBox="0 0 16 16"><g><path d="M5.5 13.5H3a.5.5 0 0 1-.5-.5V7.707a.5.5 0 0 1 .146-.353l5-5a.5.5 0 0 1 .707 0l5 5a.5.5 0 0 1 .147.353V13a.5.5 0 0 1-.5.5h-2.5m-5 0v-1.34a.5.5 0 0 1 .093-.29l2-2.8a.5.5 0 0 1 .813 0l2 2.8a.5.5 0 0 1 .094.29v1.34m-5 0h5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-imagestar" viewBox="0 0 16 16"><g><path d="M9.5 8a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" fill="currentColor"/><path fill-rule="evenodd" clip-rule="evenodd" d="m12 1.447-.558 1.535v.002a.771.771 0 0 1-.458.457h-.002L9.447 4l1.537.559a.771.771 0 0 1 .457.457v.002L12 6.553l.558-1.535v-.002a.772.772 0 0 1 .458-.457h.002L14.553 4l-1.535-.558h-.002a.771.771 0 0 1-.457-.458v-.002L12 1.447Zm-.438-1.31a.767.767 0 0 1 1.158.364l.001.003.74 2.035 2.038.741a.768.768 0 0 1 0 1.44l-.003.001-2.035.74-.74 2.035-.001.003a.768.768 0 0 1-1.44 0l-.001-.003-.74-2.035L8.5 4.72a.768.768 0 0 1 0-1.44l.003-.001 2.035-.74.74-2.035L11.28.5a.768.768 0 0 1 .282-.364ZM2.5 4a.5.5 0 0 0-.5.5v6.197l2.923-3.248A1.5 1.5 0 0 1 7.1 7.392l2.255 2.254a.5.5 0 0 1-.708.708L6.392 8.099a.5.5 0 0 0-.725.019L2 12.192v.308a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 .5-.5V9a.5.5 0 0 1 1 0v3.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 12.5v-8A1.5 1.5 0 0 1 2.5 3H6a.5.5 0 0 1 0 1H2.5Z" fill="currentColor"/></g></symbol><symbol id="i-magicwand" viewBox="0 0 16 16"><g><path d="M13.5 8v3m-9-9v3M12 9.5h3m-12-6h3m4.5 8v2m-1-1h2M9 5l2 2m-8.353 4.353 8.707-8.707a.5.5 0 0 1 .707 0l1.293 1.293a.5.5 0 0 1 0 .707l-8.708 8.707a.5.5 0 0 1-.707 0l-1.292-1.292a.5.5 0 0 1 0-.708Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-maptrifold" viewBox="0 0 32 32"><g><path d="M12 23V5m8 4v18m-8-4-8 2V7l8-2 8 4 8-2v18l-8 2-8-4Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-menu" viewBox="0 0 16 16"><g><path fill="currentColor" d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5zm12 4a.5.5 0 0 0-.5-.5h-11a.5.5 0 0 0 0 1h11a.5.5 0 0 0 .5-.5z"/></g></symbol><symbol id="i-minus" viewBox="0 0 16 16"><g><path fill="currentColor" d="M1.5 8.5A.5.5 0 0 1 2 8h12a.5.5 0 0 1 0 1H2a.5.5 0 0 1-.5-.5z" clip-rule="evenodd" fill-rule="evenodd"/></g></symbol><symbol id="i-more" viewBox="0 0 16 16"><g><path fill="currentColor" d="M8 5a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm0 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm-1 3a1 1 0 1 0 2 0 1 1 0 0 0-2 0z"/></g></symbol><symbol id="i-notepageline" viewBox="0 0 16 16"><g><path d="M6 5.5h4M6 8h2m1.5 6.5h-6a1 1 0 0 1-1-1v-11a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v9m-4 3v-2a1 1 0 0 1 1-1h3m-4 3 4-3" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-playsimple" viewBox="0 0 16 16"><g><path d="M12.794 7.175a1 1 0 0 1 0 1.65l-6.73 4.604a1 1 0 0 1-1.564-.825V3.396a1 1 0 0 1 1.565-.825l6.729 4.604Z" stroke="currentColor" stroke-linejoin="round"/></g></symbol><symbol id="i-plugsconnected" viewBox="0 0 32 32"><g><path d="M16.121 8.879 8.88 16.12a3 3 0 0 0 0 4.243l2.757 2.758a3 3 0 0 0 4.243 0l7.243-7.243a3 3 0 0 0 0-4.243L20.364 8.88a3 3 0 0 0-4.243 0ZM11 11l10 10m8-18-7.257 7.258M10.258 21.743 3 29m9-25 1 2.5M4 12l2.5 1m19 6 2.5 1m-9 5.5 1 2.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-selectioncursor" viewBox="0 0 16 16"><g><path d="M10.146 8.647a.5.5 0 0 1 .154-.813l2.9-1.113a.5.5 0 0 0-.044-.929L3.152 2.526a.5.5 0 0 0-.625.625l3.265 10.006a.5.5 0 0 0 .928.044l1.114-2.9a.5.5 0 0 1 .812-.154l3.207 3.207a.5.5 0 0 0 .707 0l.793-.792a.5.5 0 0 0 0-.706l-3.207-3.21Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-share" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M12.5 1a2.5 2.5 0 0 0-2.42 3.13L5.134 6.107a2.5 2.5 0 1 0 0 3.784l4.946 1.979a2.5 2.5 0 1 0 4.92.63 2.5 2.5 0 0 0-4.478-1.53l-4.76-1.904A2.49 2.49 0 0 0 6 8a2.49 2.49 0 0 0-.238-1.066l4.76-1.905A2.5 2.5 0 1 0 12.5 1ZM11 3.5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0Zm-7.5 3a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Zm9 4.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z" fill="currentColor"/></g></symbol><symbol id="i-sidebarright" viewBox="0 0 16 16"><g><path d="M10.5 3.5h-8a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h8m0-9h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1h-3m0-9v9" stroke="currentColor" stroke-linejoin="round"/></g></symbol><symbol id="i-starfour" viewBox="0 0 16 16"><g><g clip-path="url(#a)"><path fill="currentColor" d="M7.43 1.147a1 1 0 0 1 1.508.473v.003l1.45 3.985.001.003h.002l3.99 1.452a1 1 0 0 1 0 1.875h-.004l-3.985 1.45-.003.001-.001.003-1.45 3.988a1 1 0 0 1-1.875 0l-.002-.003-1.449-3.985v-.002l-.003-.002-3.99-1.45a1 1 0 0 1 0-1.875l.004-.002 3.985-1.449.003-.001.001-.002 1.45-3.99a1 1 0 0 1 .367-.472Zm.57.82L6.551 5.953v.002a1.006 1.006 0 0 1-.597.596l-.002.001L1.968 8l3.986 1.45a1.006 1.006 0 0 1 .596.596l.001.002L8 14.032l1.449-3.984v-.002a1.006 1.006 0 0 1 .597-.596l.002-.001L14.032 8l-3.984-1.449h-.002a1.006 1.006 0 0 1-.596-.597l-.001-.002L8 1.968Z" clip-rule="evenodd" fill-rule="evenodd"/></g><defs><clipPath><path fill="currentColor" d="M0 0h16v16H0z"/></clipPath></defs></g></symbol><symbol id="i-starshine3linear" viewBox="0 0 16 16"><g><path fill="currentColor" d="M5.865.864a.5.5 0 0 1 .444.272l1.454 2.83 2.83 1.454a.5.5 0 0 1 0 .889l-2.83 1.454-1.454 2.83a.5.5 0 0 1-.89 0l-1.453-2.83-2.83-1.454a.5.5 0 0 1 0-.89l2.83-1.453 1.454-2.83a.5.5 0 0 1 .445-.272Zm0 1.594L4.782 4.565a.5.5 0 0 1-.216.217L2.459 5.864l2.107 1.083a.5.5 0 0 1 .216.216L5.865 9.27l1.082-2.107a.5.5 0 0 1 .216-.216L9.27 5.864 7.163 4.782a.5.5 0 0 1-.216-.217L5.865 2.458Zm3.931 7.838a.5.5 0 0 1 .445.271l.606 1.179 1.178.605a.5.5 0 0 1 0 .89l-1.178.605-.606 1.178a.5.5 0 0 1-.89 0l-.605-1.178-1.178-.605a.5.5 0 0 1 0-.89l1.178-.605.606-1.179a.5.5 0 0 1 .444-.271Zm0 1.594-.234.456a.5.5 0 0 1-.216.216l-.456.234.456.234a.5.5 0 0 1 .216.216l.234.456.235-.456a.5.5 0 0 1 .216-.216l.455-.234-.455-.234a.5.5 0 0 1-.216-.216l-.235-.456Zm3.698-5.57a.5.5 0 0 0-.89 0l-.435.848-.848.436a.5.5 0 0 0 0 .89l.848.435.436.848a.5.5 0 0 0 .889 0l.436-.848.848-.435a.5.5 0 0 0 0-.89l-.848-.436-.436-.848Zm-.51 1.448.065-.125.065.125a.5.5 0 0 0 .216.216l.125.065-.125.064a.5.5 0 0 0-.216.216l-.065.126-.064-.126a.5.5 0 0 0-.216-.216l-.126-.064.126-.065a.5.5 0 0 0 .216-.216Z" clip-rule="evenodd" fill-rule="evenodd"/></g></symbol><symbol id="i-templetevideo" viewBox="0 0 16 16"><g><path fill="currentColor" d="M7.277 5.584A.5.5 0 0 0 6.5 6v4a.5.5 0 0 0 .777.416l3-2a.5.5 0 0 0 0-.832l-3-2zM7.5 9.066V6.934L9.099 8 7.5 9.066z" clip-rule="evenodd" fill-rule="evenodd"/><path fill="currentColor" d="M0 3a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V3zm1 0h2v3H1V3zm0 4v2h2V7H1zm0 6v-3h2v3H1zm3 0V3h8v10H4zm9 0v-3h2v3h-2zm0-6h2v2h-2V7zm2-1V3h-2v3h2z" clip-rule="evenodd" fill-rule="evenodd"/></g></symbol><symbol id="i-video" viewBox="0 0 16 16"><g><path fill="currentColor" d="M11 10.417V11a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1l2.553-1.276A1 1 0 0 1 15 5.618v5.391a1 1 0 0 1-1.504.864L11 10.417zM3 4h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1zm8 5.259 3 1.75V5.618l-3 1.5v2.141z" clip-rule="evenodd" fill-rule="evenodd"/></g></symbol><symbol id="i-workflow" viewBox="0 0 16 16"><g><path fill="currentColor" d="M1 3.5A2.5 2.5 0 0 1 3.5 1h4A2.5 2.5 0 0 1 10 3.5V4H9v-.5A1.5 1.5 0 0 0 7.5 2h-4A1.5 1.5 0 0 0 2 3.5v4A1.5 1.5 0 0 0 3.5 9h5.585a1.5 1.5 0 1 1 0 1H3.5A2.5 2.5 0 0 1 1 7.5v-4zm9 6a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0zM6 11v.5A2.5 2.5 0 0 0 8.5 14h4a2.5 2.5 0 0 0 2.5-2.5v-4A2.5 2.5 0 0 0 12.5 5H6.915a1.5 1.5 0 1 0 0 1H12.5A1.5 1.5 0 0 1 14 7.5v4a1.5 1.5 0 0 1-1.5 1.5h-4A1.5 1.5 0 0 1 7 11.5V11H6zm-.5-6a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1z"/></g></symbol><symbol id="i-appwindow" viewBox="0 0 16 16"><g><path d="M2.02 3.768a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-10a1 1 0 0 1-1-1v-8Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/><path d="M9.27 6a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm2.5 0a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" fill="currentColor"/></g></symbol><symbol id="i-fileimport" viewBox="0 0 16 16"><g><path fill="currentColor" d="M3.5 2a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 2 12.5v-10A1.5 1.5 0 0 1 3.5 1h5.946a1.5 1.5 0 0 1 1.272.705l2.054 3.287a1.5 1.5 0 0 1 .087.16.498.498 0 0 1 .13.453c.007.06.011.12.011.182V7.5a.5.5 0 0 1-1 0V6H9.5a.5.5 0 0 1-.5-.5V2H3.5zm6.5.443V5h1.598L10 2.443z"/><path fill="currentColor" d="M9 9a.5.5 0 0 0 0 1h2v3.293l-1.646-1.647a.5.5 0 0 0-.708.708l2.5 2.5a.5.5 0 0 0 .708 0l2.5-2.5a.5.5 0 0 0-.708-.708L12 13.293V9.5a.5.5 0 0 0-.5-.5H9z"/></g></symbol><symbol id="i-textarticlestar" viewBox="0 0 32 32"><g><path d="M15 17h13M10 3.5l2.376 4.624L17 10.5l-4.624 2.376L10 17.5l-2.376-4.624L3 10.5l4.624-2.376L10 3.5ZM19 6h4m-2-2v4M5 27h23M5 22h23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></g></symbol><symbol id="i-arrowdownload" viewBox="0 0 16 16"><g><path fill="currentColor" d="M3.5 13h9a.5.5 0 0 1 .09.992L12.5 14h-9a.5.5 0 0 1-.09-.992L3.5 13h9-9zM7.91 1.008 8 1a.5.5 0 0 1 .492.41l.008.09v8.792l2.682-2.681a.5.5 0 0 1 .638-.058l.07.058a.5.5 0 0 1 .057.638l-.058.069-3.535 3.536a.5.5 0 0 1-.638.057l-.07-.057-3.535-3.536a.5.5 0 0 1 .638-.765l.069.058L7.5 10.292V1.5a.5.5 0 0 1 .41-.492L8 1l-.09.008z"/></g></symbol><symbol id="i-hd" viewBox="0 0 16 16"><g><path fill-rule="evenodd" clip-rule="evenodd" d="M6.425 11.537c.577 0 .904-.354.904-.969v-5.6c0-.614-.327-.968-.904-.968s-.898.348-.898.969v2.035H2.801V4.969c0-.615-.326-.969-.903-.969S1 4.348 1 4.969v5.599c0 .62.321.969.898.969s.903-.354.903-.969V8.435h2.726v2.133c0 .62.321.969.898.969Zm5.262-.055c2.187 0 3.357-1.295 3.357-3.717 0-2.416-1.17-3.71-3.357-3.71H9.82c-.68 0-1.05.358-1.05 1.028v5.37c0 .67.37 1.03 1.05 1.03h1.867Zm-1.115-1.431h.838c1.235 0 1.796-.707 1.796-2.285 0-1.573-.56-2.286-1.796-2.286h-.838v4.571Z" fill="currentColor"/></g></symbol><symbol id="i-ratio" viewBox="0 0 16 16">
+<g>
+<path d="M8 2V11.5M12.5 7L8 11.5L3.5 7M2.5 13.5H13.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</symbol><symbol id="i-pause" viewBox="0 0 16 16"><path fill="currentColor" d="M4.5 2.5h2v11h-2zm5 0h2v11h-2z"/></symbol><symbol id="i-arrow-right" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" d="M2.5 8h11M9.5 4l4 4-4 4"/></symbol><symbol id="i-arrow-left" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" d="M13.5 8h-11M6.5 4l-4 4 4 4"/></symbol><symbol id="i-arrow-down" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" d="M8 2.5v11M4 9.5l4 4 4-4"/></symbol><symbol id="i-check" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" d="M3 8.5l3.2 3.2L13 5"/></symbol><symbol id="i-copy" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" d="M5.5 5.5v-2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-2m-7-5h6a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1Z"/></symbol><symbol id="i-thumb-up" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" d="M5 7.2 7.6 2.5c.9 0 1.6.7 1.6 1.6v2.4h3a1.2 1.2 0 0 1 1.2 1.4l-.7 4.2a1.6 1.6 0 0 1-1.6 1.4H5m0-6.3v6.3m0-6.3H3.2a.7.7 0 0 0-.7.7v4.9c0 .4.3.7.7.7H5"/></symbol><symbol id="i-thumb-down" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" d="M11 8.8 8.4 13.5c-.9 0-1.6-.7-1.6-1.6V9.5h-3a1.2 1.2 0 0 1-1.2-1.4l.7-4.2a1.6 1.6 0 0 1 1.6-1.4H11m0 6.3V2.5m0 6.3h1.8a.7.7 0 0 0 .7-.7V3.2a.7.7 0 0 0-.7-.7H11"/></symbol><symbol id="i-doc" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round" d="M9.5 2H4.6a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h6.8a1 1 0 0 0 1-1V5L9.5 2Zm0 0v3h2.9M5.8 8.2h4.4M5.8 10.6h3"/></symbol><symbol id="i-link" viewBox="0 0 16 16"><path fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" d="M6.8 9.2a2.6 2.6 0 0 0 3.7 0l2-2a2.6 2.6 0 0 0-3.7-3.7l-.7.7m1.1 2.6a2.6 2.6 0 0 0-3.7 0l-2 2a2.6 2.6 0 0 0 3.7 3.7l.7-.7"/></symbol></svg>
+<a class="skip" href="#main">跳至正文</a>
+
+<header class="site-header" data-header>
+  <div class="shell header-in">
+    <a class="brand" href="#top" aria-label="D5 Arco 首页"><img src="v7/assets/brand.webp" alt="" width="28" height="28"><span>D5 Arco</span></a>
+    <nav class="site-nav" aria-label="页面导航">
+      <a href="#canvas">画布</a>
+      <a href="#together">一起推敲</a>
+      <a href="#motion">视频</a>
+      <a href="#work">表达</a>
+      <a href="#d5">与 D5</a>
+    </nav>
+    <div class="header-act">
+      <a class="btn btn-light btn-sm" href="#get">获取 Arco</a>
+      <button type="button" class="menu-toggle" data-menu-toggle aria-expanded="false" aria-controls="mobile-menu" aria-label="打开菜单"><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobile-menu" data-menu hidden>
+  <nav aria-label="移动端导航">
+    <a href="#canvas">画布</a>
+    <a href="#together">一起推敲</a>
+    <a href="#motion">视频</a>
+    <a href="#work">表达</a>
+    <a href="#begin">从哪里开始</a>
+    <a href="#d5">与 D5</a>
+  </nav>
+  <a class="btn btn-primary" href="#get">获取 Arco</a>
+</div>
+
+<main id="main">
+
+<!-- ===================== 首屏 ===================== -->
+<section class="hero" id="top" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="shell hero-copy">
+    <p class="hero-id"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-starshine3linear"/></svg><span>D5 出品 · 建筑与空间设计的 AI Agent</span></p>
+    <h1 id="hero-title"><span class="nb">一起想清楚，</span><span class="nb">接着往前做。</span></h1>
+    <p class="hero-sub">方向没定，先和 Arco 一起推敲；想定了，就在同一张画布上<span class="nb">接着做出视角、图纸和视频。</span></p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#get">获取 Arco</a>
+      <a class="btn btn-ghost" href="#canvas">看一个项目怎么往前走<svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-down"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 画布：别墅设计（官方演示项目） ===================== -->
+<section class="story" id="canvas" aria-labelledby="story-title" data-story data-steps="6">
+  <h2 class="sr-only" id="story-title">画布：一张图，走成一整个项目</h2>
+  <div class="story-pin" data-pin>
+    <div class="shell-wide story-in">
+      <div class="app" data-app role="group" aria-label="Arco 画布的网页还原：官方演示项目「别墅设计」">
+        <div class="app-bar">
+          <div class="app-title"><span class="app-name">别墅设计</span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-chevrondown"/></svg><span class="app-tag">官方演示项目</span></div>
+          <div class="app-bar-r" aria-hidden="true"><span class="app-share"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-share"/></svg>分享</span><span class="app-ico"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-sidebarright"/></svg></span></div>
+        </div>
+        <div class="app-body">
+          <div class="app-rail" aria-hidden="true">
+            <span title="首页"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-housesimple"/></svg></span>
+            <span title="新对话"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-comment"/></svg></span>
+            <span class="on" title="画布"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-frame"/></svg></span>
+            <span title="项目"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-foldervertical"/></svg></span>
+            <span title="连接"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-plugsconnected"/></svg></span>
+            <span title="技能"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-magicwand"/></svg></span>
+          </div>
+          <div class="cv" data-cv>
+            <div class="cv-world" data-world role="group" aria-label="画布节点"><svg class="cv-edges" viewBox="0 0 5127 3275" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path data-edge="base-kitchen" d="M1664,733.5H1854"/><path data-edge="base-pool" d="M1664,733.5C1759,733.5 1759,1691.5 1854,1691.5"/><path data-edge="base-cantilever" d="M1664,733.5C1759,733.5 1759,2665.5 1854,2665.5"/><path data-edge="base-aerial" d="M1531,290V196Q1531,140 1587,140H2535Q2591,140 2591,196V677.5Q2591,733.5 2647,733.5H2663"/><path data-edge="aerial-night" d="M3328,733.5H3479"/><path data-edge="aerial-winter" d="M3328,733.5C3403.5,733.5 3403.5,1727.5 3479,1727.5"/><path data-edge="aerial-autumn" d="M3328,733.5C3403.5,733.5 3403.5,2701.5 3479,2701.5"/><path data-edge="aerial-plan1" d="M3195,290V196Q3195,140 3251,140H4162Q4218,140 4218,196V677.5Q4218,733.5 4274,733.5H4292"/><path data-edge="aerial-plan2" d="M3195,290V196Q3195,140 3251,140H4162Q4218,140 4218,196V1671.5Q4218,1727.5 4274,1727.5H4292"/></svg><button type="button" class="nd nd-prompt" data-node="prompt" data-i="0" aria-label="提示词卡片：露台描述（反推提示词）"><span class="nd-tag"><b>提示词</b>露台描述</span><span class="nd-card"><span class="nd-card-in"><span class="nd-card-h"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-notepageline"/></svg>提示词<i>反推提示词</i></span><span class="nd-card-t">一座豪华现代别墅的露台俯瞰丘陵景观，设有无边际泳池。开放式户外起居区布置低矮白色组合沙发和靠垫，环绕中央燃着火焰的圆形下沉式火塘。平顶混凝土亭廊向上方延伸，为户外厨房和用餐区遮蔽；覆盖区域下设有操作台、吧凳、餐桌和餐椅。露台采用平整的浅色石材或混凝土铺面，泳池附近放置户外茶几与休闲座椅。露台边缘种有橄榄树般的树木和绿色灌木，远处可见起伏丘陵与朦胧群山，天空柔和阴郁。</span></span></span></button><button type="button" class="nd" data-node="base" data-i="1" aria-label="生成：露台"><span class="nd-tag"><b>生成</b>露台</span><span class="nd-img"><img src="v7/assets/img/villa-0.webp" alt="现代别墅露台：下沉式火塘、白色沙发、混凝土亭廊与远山" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="kitchen" data-i="2" aria-label="编辑：厨房操作台，来自「露台」"><span class="nd-tag"><b>编辑</b>厨房操作台</span><span class="nd-img"><img src="v7/assets/img/villa-5.webp" alt="户外厨房操作台平视特写：一位女士在石质岛台后倒酒" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="pool" data-i="3" aria-label="编辑：泳池边，来自「露台」"><span class="nd-tag"><b>编辑</b>泳池边</span><span class="nd-img"><img src="v7/assets/img/villa-7.webp" alt="无边际泳池边缘低角度特写：躺床、边桌与远山" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="cantilever" data-i="4" aria-label="编辑：悬挑檐口，来自「露台」"><span class="nd-tag"><b>编辑</b>悬挑檐口</span><span class="nd-img"><img src="v7/assets/img/villa-9.webp" alt="混凝土悬挑檐与钢柱连接处的低角度细部" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="aerial" data-i="5" aria-label="编辑：鸟瞰，来自「露台」"><span class="nd-tag"><b>编辑</b>鸟瞰</span><span class="nd-img"><img src="v7/assets/img/villa-1.webp" alt="同一露台的无人机鸟瞰视角：火塘、泳池与亭廊布局" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="night" data-i="6" aria-label="技能「时间迁移」：夜景 23:00，来自「鸟瞰」"><span class="nd-tag"><b>技能</b>夜景 23:00</span><span class="nd-img"><img src="v7/assets/img/villa-2.webp" alt="同一鸟瞰视角的夜景：火塘与泳池亮灯" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="winter" data-i="7" aria-label="技能「季节迁移」：冬季，来自「鸟瞰」"><span class="nd-tag"><b>技能</b>冬季</span><span class="nd-img"><img src="v7/assets/img/villa-3.webp" alt="同一鸟瞰视角的冬季：薄雪与稀疏植被" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="autumn" data-i="8" aria-label="技能「季节迁移」：秋季，来自「鸟瞰」"><span class="nd-tag"><b>技能</b>秋季</span><span class="nd-img"><img src="v7/assets/img/villa-4.webp" alt="同一鸟瞰视角的秋季：暖色叶片与低角度日光" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="plan1" data-i="9" aria-label="编辑：总平面，来自「鸟瞰」"><span class="nd-tag"><b>编辑</b>总平面</span><span class="nd-img"><img src="v7/assets/img/villa-6.webp" alt="露台的总平面图：圆形下沉座席、泳池与亭廊" width="768" height="1024" decoding="async" draggable="false"></span></button><button type="button" class="nd" data-node="plan2" data-i="10" aria-label="编辑：总平面 · 另一版，来自「鸟瞰」"><span class="nd-tag"><b>编辑</b>总平面 · 另一版</span><span class="nd-img"><img src="v7/assets/img/villa-8.webp" alt="露台的另一版总平面图，线稿更轻" width="768" height="1024" decoding="async" draggable="false"></span></button></div>
+            <div class="cv-tools" aria-hidden="true">
+              <span class="on" title="生成"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-imagestar"/></svg></span>
+              <span title="提示词"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-notepageline"/></svg></span>
+              <span title="上传图片"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrowoutup"/></svg></span>
+              <span title="生成记录"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrowclock"/></svg></span>
+              <span title="获取场景截图"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-appwindow"/></svg></span>
+              <span title="整理画布"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-workflow"/></svg></span>
+              <span title="分组"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-framecorners"/></svg></span>
+            </div>
+            <aside class="cv-panel" data-panel aria-live="polite" hidden></aside>
+            <div class="cv-bottom">
+              <div class="cv-mode" aria-hidden="true"><span class="on"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-selectioncursor"/></svg></span><span><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-hand"/></svg></span></div>
+              <div class="cv-zoom">
+                <button type="button" data-zoom="out" aria-label="缩小画布"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-minus"/></svg></button>
+                <output data-zoom-val aria-label="当前缩放">20%</output>
+                <button type="button" data-zoom="in" aria-label="放大画布"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-add"/></svg></button>
+                <button type="button" data-zoom="fit" aria-label="适应内容"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cornersout"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="story-foot">
+        <ol class="steps" data-steps-list><li class="step is-on" data-step="0"><h3>一张图，走成一整个项目</h3><p>这是 Arco 的官方演示项目「别墅设计」。<span class="when-live">往下滚动，看这张画布怎样一步步长出来。</span><span class="when-static">点选下面每一步，看这张画布怎样一步步长出来。</span><span class="when-plain">下面六步，是这张画布长出来的过程。</span></p></li><li class="step" data-step="1"><h3>从一段描述开始</h3><p>写下想要的露台，得到第一张可以讨论的图。手上已有的图也可以放上画布，反推出它的提示词。</p></li><li class="step" data-step="2"><h3>换个视角，已定的不动</h3><p>要保留什么，直接写进要求里：建筑、洞石、火塘、泳池和悬挑亭廊都不变，只把相机升到空中。</p></li><li class="step" data-step="3"><h3>从选中的那一版继续</h3><p>认定鸟瞰这一版，再往下做夜景、冬季、秋季和两张总平面。每张图都接在它的来源后面。</p></li><li class="step" data-step="4"><h3>回到第一张，走近看</h3><p>厨房操作台、泳池边、悬挑檐口。三处细部都从最初那张图出发，而不是从上一步。</p></li><li class="step" data-step="5"><h3>十张图，都有来路</h3><p>每张图都连着一段描述，或者前面的某一张图。回到任何一步，都可以换个方向再走。</p></li></ol>
+        <div class="story-nav" data-story-nav>
+          <button type="button" class="nav-arrow" data-prev aria-label="上一步"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-left"/></svg></button>
+          <div class="dots"><button type="button" class="dot is-on" data-goto="0" aria-label="第 1 步，共 6 步：一张图，走成一整个项目" aria-current="step"></button><button type="button" class="dot" data-goto="1" aria-label="第 2 步，共 6 步：从一段描述开始"></button><button type="button" class="dot" data-goto="2" aria-label="第 3 步，共 6 步：换个视角，已定的不动"></button><button type="button" class="dot" data-goto="3" aria-label="第 4 步，共 6 步：从选中的那一版继续"></button><button type="button" class="dot" data-goto="4" aria-label="第 5 步，共 6 步：回到第一张，走近看"></button><button type="button" class="dot" data-goto="5" aria-label="第 6 步，共 6 步：十张图，都有来路"></button></div>
+          <button type="button" class="nav-arrow" data-next aria-label="下一步"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="note story-note shell-wide">画布为网页还原。节点位置、派生关系与提示词取自 Arco 官方演示项目「别墅设计」的项目文件<span class="js-only">；点任意一张图可查看它的要求</span>。</p>
+  <script type="application/json" id="story-data">{"world":{"w":5127,"h":3275},"nodes":{"base":{"x":999,"y":290,"w":665,"h":887,"op":"生成","name":"露台","img":"villa-0","parent":null,"prompt":"一座豪华现代别墅的露台俯瞰丘陵景观，设有无边际泳池。开放式户外起居区布置低矮白色组合沙发和靠垫，环绕中央燃着火焰的圆形下沉式火塘。平顶混凝土亭廊向上方延伸，为户外厨房和用餐区遮蔽；覆盖区域下设有操作台、吧凳、餐桌和餐椅。露台采用平整的浅色石材或混凝土铺面，泳池附近放置户外茶几与休闲座椅。露台边缘种有橄榄树般的树木和绿色灌木，远处可见起伏丘陵与朦胧群山，天空柔和阴郁。","skill":null,"param":null,"meta":["2K","3:4"],"badge":null},"aerial":{"x":2663,"y":290,"w":665,"h":887,"op":"编辑","name":"鸟瞰","img":"villa-1","parent":"base","prompt":"将参考图的相机角度改为俯视的高角度无人机鸟瞰视角。严格保持原图的建筑、洞石材质、圆形下沉式火塘、无边际泳池和悬挑亭廊，从上方展示完整露台布局，以山地景观为背景。","skill":null,"param":null,"meta":["2K"],"badge":null},"night":{"x":3479,"y":290,"w":665,"h":887,"op":"技能","name":"夜景 23:00","img":"villa-2","parent":"aerial","prompt":"将输入图像的光照与氛围转换到目标时刻，同时保留所有原有物体、建筑和构图。保持：原始构图、建筑几何、行人位置和物体摆放。","skill":"时间迁移","param":"目标时间 23:00","meta":["2K"],"badge":null},"winter":{"x":3479,"y":1284,"w":665,"h":887,"op":"技能","name":"冬季","img":"villa-3","parent":"aerial","prompt":"将场景转换为冬季状态，降低植被活跃度，营造寒冷季节氛围，同时保留所有原有物体、建筑和构图。保持：原始构图、建筑几何、行人位置和物体摆放。","skill":"季节迁移","param":"目标季节 冬季","meta":["2K"],"badge":null},"autumn":{"x":3479,"y":2258,"w":665,"h":887,"op":"技能","name":"秋季","img":"villa-4","parent":"aerial","prompt":"将场景转换为秋季状态，调整季节性叶色并营造平静氛围，同时保留所有原有物体、建筑和构图。保持：原始构图、建筑几何、行人位置和物体摆放。","skill":"季节迁移","param":"目标季节 秋季","meta":["2K"],"badge":null},"kitchen":{"x":1854,"y":290,"w":665,"h":887,"op":"编辑","name":"厨房操作台","img":"villa-5","parent":"base","prompt":"参考图中户外厨房操作台的平视特写。一位穿亚麻夏季衬衫的女士站在石质岛台后，将葡萄酒倒入杯中。暖色背光悬浮搁板、木质吧凳、简洁现代的水龙头，傍晚氛围，编辑类生活方式摄影，8K。","skill":null,"param":null,"meta":["2K"],"badge":null},"plan1":{"x":4292,"y":290,"w":665,"h":887,"op":"编辑","name":"总平面","img":"villa-6","parent":"aerial","prompt":"将参考图转换为建筑竞赛风格的总平面图。把露台布局转换为二维正投影俯视总平面，严格保留圆形下沉式座席、泳池和亭廊的几何形态，使用清晰线条、细腻材质纹理、柔和投影和极简景观表达。","skill":null,"param":null,"meta":["2K"],"badge":null},"pool":{"x":1854,"y":1248,"w":665,"h":887,"op":"编辑","name":"泳池边","img":"villa-7","parent":"base","prompt":"参考图中无边际泳池边缘的低角度特写。空置的奶油色模块化日间躺床，以及摆放盆栽多肉植物的深色圆形边桌。平静的青绿色水面映照阴天，背景为远山，8K。","skill":null,"param":null,"meta":["2K"],"badge":null},"plan2":{"x":4292,"y":1284,"w":665,"h":887,"op":"编辑","name":"总平面 · 另一版","img":"villa-8","parent":"aerial","prompt":"将参考图转换为建筑竞赛风格的总平面图。把露台布局转换为二维正投影俯视总平面，严格保留圆形下沉式座席、泳池和亭廊的几何形态，使用清晰线条、细腻材质纹理、柔和投影和极简景观表达。","skill":null,"param":null,"meta":["2K"],"badge":null},"cantilever":{"x":1854,"y":2222,"w":665,"h":887,"op":"编辑","name":"悬挑檐口","img":"villa-9","parent":"base","prompt":"参考图中厚重清水混凝土悬挑檐与纤细钢柱连接处的低角度建筑细部。重点表现锐利的水平屋顶线如何框取远处山脊，展现厚重体量与开阔景观之间的张力。阴天柔光，8K。","skill":null,"param":null,"meta":["2K"],"badge":null},"prompt":{"x":170,"y":290,"w":680,"h":680,"op":"提示词","name":"露台描述","img":null,"parent":null,"prompt":"一座豪华现代别墅的露台俯瞰丘陵景观，设有无边际泳池。开放式户外起居区布置低矮白色组合沙发和靠垫，环绕中央燃着火焰的圆形下沉式火塘。平顶混凝土亭廊向上方延伸，为户外厨房和用餐区遮蔽；覆盖区域下设有操作台、吧凳、餐桌和餐椅。露台采用平整的浅色石材或混凝土铺面，泳池附近放置户外茶几与休闲座椅。露台边缘种有橄榄树般的树木和绿色灌木，远处可见起伏丘陵与朦胧群山，天空柔和阴郁。","skill":null,"param":null,"meta":[],"badge":"反推提示词"}},"edges":[{"id":"base-kitchen","from":"base","to":"kitchen"},{"id":"base-pool","from":"base","to":"pool"},{"id":"base-cantilever","from":"base","to":"cantilever"},{"id":"base-aerial","from":"base","to":"aerial"},{"id":"aerial-night","from":"aerial","to":"night"},{"id":"aerial-winter","from":"aerial","to":"winter"},{"id":"aerial-autumn","from":"aerial","to":"autumn"},{"id":"aerial-plan1","from":"aerial","to":"plan1"},{"id":"aerial-plan2","from":"aerial","to":"plan2"}],"states":[{"id":"overview","title":"一张图，走成一整个项目","text":"这是 Arco 的官方演示项目「别墅设计」。往下滚动，看这张画布怎样一步步长出来。","focusD":"all","focusM":["base","kitchen","pool"],"active":[],"edges":[],"panel":null},{"id":"start","title":"从一段描述开始","text":"写下想要的露台，得到第一张可以讨论的图。手上已有的图也可以放上画布，反推出它的提示词。","focusD":["prompt","base"],"focusM":["base"],"active":["prompt","base"],"edges":[],"panel":{"node":"base","mobileOnly":true}},{"id":"view","title":"换个视角，已定的不动","text":"要保留什么，直接写进要求里：建筑、洞石、火塘、泳池和悬挑亭廊都不变，只把相机升到空中。","focusD":["base","aerial"],"focusM":["aerial"],"active":["base","aerial"],"edges":["base-aerial"],"panel":{"node":"aerial"}},{"id":"branch","title":"从选中的那一版继续","text":"认定鸟瞰这一版，再往下做夜景、冬季、秋季和两张总平面。每张图都接在它的来源后面。","focusD":["aerial","night","winter","plan1","plan2"],"focusM":["night","winter"],"active":["aerial","night","winter","autumn","plan1","plan2"],"edges":["aerial-night","aerial-winter","aerial-autumn","aerial-plan1","aerial-plan2"],"panel":{"title":"从「鸟瞰」继续","rows":["night","winter","autumn","plan1","plan2"]}},{"id":"detail","title":"回到第一张，走近看","text":"厨房操作台、泳池边、悬挑檐口。三处细部都从最初那张图出发，而不是从上一步。","focusD":["base","kitchen","pool"],"focusM":["kitchen","pool"],"active":["base","kitchen","pool","cantilever"],"edges":["base-kitchen","base-pool","base-cantilever"],"panel":{"title":"从「露台」继续","rows":["kitchen","pool","cantilever"]}},{"id":"whole","title":"十张图，都有来路","text":"每张图都连着一段描述，或者前面的某一张图。回到任何一步，都可以换个方向再走。","focusD":"all","focusM":"all","active":[],"edges":"all","panel":null}]}</script>
+</section>
+
+<!-- ===================== 一起推敲 ===================== -->
+<section class="sec together" id="together" aria-labelledby="together-title">
+  <div class="shell">
+    <header class="sec-head" data-reveal>
+      <h2 id="together-title"><span class="nb">没想定的，</span><span class="nb">先问清楚。</span></h2>
+      <p>条件只说了一半，也可以开口。缺的信息 Arco 会问出来；<span class="nb">不合适的方向，你说一句，它记下。</span></p>
+    </header>
+
+    <div class="together-grid">
+      <div class="ui ui-q" data-reveal data-qcard role="group" aria-labelledby="q-title">
+        <div class="ui-h"><span class="ava"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-starfour"/></svg></span><strong id="q-title">请补充以下信息</strong></div>
+        <fieldset class="q">
+          <legend><span>你主要希望解决什么问题？</span><em>必答</em></legend>
+          <label class="opt"><input type="radio" name="q-purpose" value="从零开始打造新空间"><span>从零开始打造新空间</span></label>
+          <label class="opt"><input type="radio" name="q-purpose" value="为老旧空间注入新活力"><span>为老旧空间注入新活力</span></label>
+          <label class="opt"><input type="radio" name="q-purpose" value="打造实用的户外空间" checked><span>打造实用的户外空间</span></label>
+          <label class="opt"><input type="radio" name="q-purpose" value="解决坡度、排水或其他场地问题"><span>解决坡度、排水或其他场地问题</span></label>
+          <label class="opt"><input type="radio" name="q-purpose" value="更新植物配置"><span>更新植物配置</span></label>
+        </fieldset>
+        <fieldset class="q">
+          <legend><span>以下哪种风格最符合你的需求？</span><em>可跳过</em></legend>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="q-style" value="有机现代主义"><span>有机现代主义</span></label>
+            <label class="chip"><input type="radio" name="q-style" value="斯堪的纳维亚设计"><span>斯堪的纳维亚设计</span></label>
+            <label class="chip"><input type="radio" name="q-style" value="极简主义"><span>极简主义</span></label>
+            <label class="chip"><input type="radio" name="q-style" value="地中海风格"><span>地中海风格</span></label>
+            <label class="chip"><input type="radio" name="q-style" value="新中式"><span>新中式</span></label>
+            <label class="chip"><input type="radio" name="q-style" value="日式北欧风"><span>日式北欧风</span></label>
+            <label class="chip chip-alt"><input type="radio" name="q-style" value="帮我推荐"><span>帮我推荐</span></label>
+          </div>
+        </fieldset>
+        <p class="q-upload"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrowoutup"/></svg>上传灵感图片或已有文件</p>
+        <div class="ui-f">
+          <p class="q-status" data-q-status role="status"></p>
+          <button type="button" class="btn-mini ghost" data-q-skip>暂不回答</button>
+          <button type="button" class="btn-mini solid" data-q-submit>提交并继续</button>
+        </div>
+      </div>
+
+      <div class="together-side">
+        <div class="ui ui-reply" data-reveal data-feedback role="group" aria-label="界面示意：对一次结果给出反馈">
+          <div class="reply-imgs">
+            <img src="v7/assets/img/garden-2.webp" alt="花园方案示例：碎石小径、观赏草与石块" width="360" height="360" loading="lazy" decoding="async">
+            <img src="v7/assets/img/garden-3.webp" alt="花园方案示例：红枫、薰衣草与白墙" width="360" height="360" loading="lazy" decoding="async">
+          </div>
+          <p class="reply-cap">为你定制的方案</p>
+          <div class="reply-act">
+            <button type="button" class="fb" data-fb="like" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-thumb-up"/></svg><span>记住这个风格</span></button>
+            <button type="button" class="fb" data-fb="dislike" aria-pressed="false"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-thumb-down"/></svg><span>不太对</span></button>
+          </div>
+          <p class="reply-status" data-fb-status role="status"></p>
+        </div>
+
+        <div class="ui ui-mem" data-reveal role="group" aria-labelledby="mem-title">
+          <div class="ui-h"><strong id="mem-title">偏好</strong><span class="ui-h-sub">让 AI 更了解你的设计风格</span></div>
+          <ul class="mem-list" data-mem-list>
+            <li class="mem" data-mem>
+              <span class="mem-kind like">喜欢</span>
+              <span class="mem-text">偏好低饱和度配色，喜欢大量留白</span>
+              <span class="mem-src">手写偏好</span>
+              <button type="button" class="switch" role="switch" aria-checked="true" data-mem-switch aria-label="用于生成：偏好低饱和度配色，喜欢大量留白"><i></i></button>
+              <span class="mem-off">此条已关闭，不会影响生成结果</span>
+            </li>
+            <li class="mem mem-hint" data-mem-hint><span>对上面的结果点“不太对”，它会出现在这里。</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <ul class="points" data-reveal>
+      <li><h3>缺什么，问什么</h3><p>要解决的问题、风格、手上的资料。可以选，可以补一句，也可以先跳过。</p></li>
+      <li><h3>不太对，就直说</h3><p>对结果点一下“不太对”，这个方向会被记为需要避免。</p></li>
+      <li><h3>偏好看得见</h3><p>喜欢的和要避免的都列在偏好里，任何一条都能随时关掉。</p></li>
+    </ul>
+    <p class="note" data-reveal>界面示意，文案取自 Arco 客户端 0.10.1；配图为官方首页案例图。</p>
+  </div>
+</section>
+
+<!-- ===================== 视频：超高层地标（官方演示项目） ===================== -->
+<section class="sec motion" id="motion" aria-labelledby="motion-title">
+  <div class="shell">
+    <header class="sec-head sec-head-split" data-reveal>
+      <h2 id="motion-title"><span class="nb">选定一版，</span><span class="nb">让它动起来。</span></h2>
+      <p>先摆出七个概念方向，选定其中一版；从它展开八个视角，再把其中三张变成镜头。</p>
+    </header>
+    <div class="reel" data-reel data-reveal>
+      <article class="clip" data-clip data-autoplay>
+        <div class="clip-frame">
+          <video playsinline muted loop preload="none" poster="v7/assets/poster/landmark-21.webp" src="v7/media/landmark-21.mp4" controls width="834" height="1112" aria-label="视频：FPV 穿行，15 秒，无声">当前浏览器无法播放这段视频。</video>
+          <button type="button" class="clip-toggle" aria-label="播放：FPV 穿行" aria-pressed="false"><span class="clip-btn"><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></span></button>
+          <div class="clip-hud">
+            <div class="clip-meta"><strong>FPV 穿行</strong><span>15 秒</span></div>
+            <div class="clip-ctrl">
+              <input type="range" class="clip-seek" min="0" max="1000" value="0" step="1" aria-label="FPV 穿行：播放进度">
+              <span class="clip-time" aria-hidden="true">0:00 / 0:15</span>
+              <button type="button" class="clip-fs" aria-label="全屏播放：FPV 穿行"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cornersout"/></svg></button>
+            </div>
+          </div>
+          <p class="clip-error" hidden>视频未能加载，显示的是首帧画面。</p>
+        </div>
+        <p class="clip-from"><img src="v7/assets/img/landmark-11.webp" alt="" width="765" height="1024" loading="lazy" decoding="async"><span>首帧<b>选定的概念图</b></span></p>
+      </article>
+      <article class="clip" data-clip>
+        <div class="clip-frame">
+          <video playsinline muted loop preload="none" poster="v7/assets/poster/landmark-20.webp" src="v7/media/landmark-20.mp4" controls width="834" height="1112" aria-label="视频：滨水延时，5 秒，无声">当前浏览器无法播放这段视频。</video>
+          <button type="button" class="clip-toggle" aria-label="播放：滨水延时" aria-pressed="false"><span class="clip-btn"><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></span></button>
+          <div class="clip-hud">
+            <div class="clip-meta"><strong>滨水延时</strong><span>5 秒</span></div>
+            <div class="clip-ctrl">
+              <input type="range" class="clip-seek" min="0" max="1000" value="0" step="1" aria-label="滨水延时：播放进度">
+              <span class="clip-time" aria-hidden="true">0:00 / 0:05</span>
+              <button type="button" class="clip-fs" aria-label="全屏播放：滨水延时"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cornersout"/></svg></button>
+            </div>
+          </div>
+          <p class="clip-error" hidden>视频未能加载，显示的是首帧画面。</p>
+        </div>
+        <p class="clip-from"><img src="v7/assets/img/landmark-18.webp" alt="" width="765" height="1024" loading="lazy" decoding="async"><span>首帧<b>滨河步道</b></span></p>
+      </article>
+      <article class="clip" data-clip>
+        <div class="clip-frame">
+          <video playsinline muted loop preload="none" poster="v7/assets/poster/landmark-26.webp" src="v7/media/landmark-26.mp4" controls width="834" height="1112" aria-label="视频：日转夜，15 秒，无声">当前浏览器无法播放这段视频。</video>
+          <button type="button" class="clip-toggle" aria-label="播放：日转夜" aria-pressed="false"><span class="clip-btn"><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></span></button>
+          <div class="clip-hud">
+            <div class="clip-meta"><strong>日转夜</strong><span>15 秒</span></div>
+            <div class="clip-ctrl">
+              <input type="range" class="clip-seek" min="0" max="1000" value="0" step="1" aria-label="日转夜：播放进度">
+              <span class="clip-time" aria-hidden="true">0:00 / 0:15</span>
+              <button type="button" class="clip-fs" aria-label="全屏播放：日转夜"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-cornersout"/></svg></button>
+            </div>
+          </div>
+          <p class="clip-error" hidden>视频未能加载，显示的是首帧画面。</p>
+        </div>
+        <p class="clip-from"><img src="v7/assets/img/landmark-19.webp" alt="" width="765" height="1024" loading="lazy" decoding="async"><span>首帧<b>街道视角</b></span></p>
+      </article>
+    </div>
+    <div class="lineage" data-reveal>
+      <div class="lineage-group lineage-concept"><h3>概念<span>7</span></h3><ul><li><img src="v7/assets/img/landmark-5.webp" alt="概念方向" width="765" height="1024" loading="lazy" decoding="async"></li><li><img src="v7/assets/img/landmark-6.webp" alt="概念方向" width="765" height="1024" loading="lazy" decoding="async"></li><li><img src="v7/assets/img/landmark-7.webp" alt="概念方向" width="765" height="1024" loading="lazy" decoding="async"></li><li><img src="v7/assets/img/landmark-8.webp" alt="概念方向" width="765" height="1024" loading="lazy" decoding="async"></li><li><img src="v7/assets/img/landmark-9.webp" alt="概念方向" width="765" height="1024" loading="lazy" decoding="async"></li><li><img src="v7/assets/img/landmark-10.webp" alt="概念方向" width="765" height="1024" loading="lazy" decoding="async"></li><li class="is-chosen"><img src="v7/assets/img/landmark-11.webp" alt="选定的概念方向：折板裙房与纤细塔楼" width="765" height="1024" loading="lazy" decoding="async"><span>选定</span></li></ul></div>
+      <div class="lineage-arrow" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></div>
+      <div class="lineage-group lineage-angle"><h3>多角度<span>8</span></h3><ul><li><img src="v7/assets/img/landmark-12.webp" alt="滨水阶梯" width="765" height="1024" loading="lazy" decoding="async"><span>滨水阶梯</span></li><li><img src="v7/assets/img/landmark-13.webp" alt="仰视立面" width="765" height="1024" loading="lazy" decoding="async"><span>仰视立面</span></li><li><img src="v7/assets/img/landmark-14.webp" alt="裙房与塔身" width="765" height="1024" loading="lazy" decoding="async"><span>裙房与塔身</span></li><li><img src="v7/assets/img/landmark-15.webp" alt="入口广场" width="765" height="1024" loading="lazy" decoding="async"><span>入口广场</span></li><li><img src="v7/assets/img/landmark-18.webp" alt="滨河步道" width="765" height="1024" loading="lazy" decoding="async"><span>滨河步道</span></li><li><img src="v7/assets/img/landmark-19.webp" alt="街道视角" width="765" height="1024" loading="lazy" decoding="async"><span>街道视角</span></li><li><img src="v7/assets/img/landmark-24.webp" alt="中庭入口" width="765" height="1024" loading="lazy" decoding="async"><span>中庭入口</span></li><li><img src="v7/assets/img/landmark-25.webp" alt="裙房平台" width="765" height="1024" loading="lazy" decoding="async"><span>裙房平台</span></li></ul></div>
+    </div>
+    <p class="note" data-reveal>Arco 官方演示项目「超高层地标」。视频为项目内原始文件，无声。</p>
+  </div>
+</section>
+
+<!-- ===================== 表达 ===================== -->
+<section class="sec work" id="work" aria-labelledby="work-title">
+  <div class="shell">
+    <header class="sec-head" data-reveal>
+      <h2 id="work-title"><span class="nb">同一张画布，</span><span class="nb">不止一种表达。</span></h2>
+    </header>
+    <div class="tabs" data-tabs data-reveal>
+      <div class="tab-list" role="tablist" aria-label="表达方式" aria-orientation="vertical">
+        <button type="button" role="tab" id="tab-directions" aria-controls="panel-directions" aria-selected="true"><strong>多个方向</strong><span>同一段描述，先出几版摆在一起看。</span><i class="tab-bar" aria-hidden="true"></i></button>
+        <button type="button" role="tab" id="tab-time" aria-controls="panel-time" aria-selected="false" tabindex="-1"><strong>时间与季节</strong><span>同一个视角，换成夜晚、冬天或秋天。</span><i class="tab-bar" aria-hidden="true"></i></button>
+        <button type="button" role="tab" id="tab-plan" aria-controls="panel-plan" aria-selected="false" tabindex="-1"><strong>总平面与分析图</strong><span>从效果图，到图纸式的表达。</span><i class="tab-bar" aria-hidden="true"></i></button>
+        <button type="button" role="tab" id="tab-style" aria-controls="panel-style" aria-selected="false" tabindex="-1"><strong>手绘与画风</strong><span>换一种画法，再让画面动起来。</span><i class="tab-bar" aria-hidden="true"></i></button>
+      </div>
+      <div class="tab-panels">
+
+        <section class="tab-panel" role="tabpanel" id="panel-directions" aria-labelledby="tab-directions" tabindex="0">
+          <header class="panel-head"><h3>多个方向</h3><p>同一段描述，先出几版摆在一起看。</p></header>
+          <div class="stage stage-directions">
+            <div class="pcard">
+              <span class="pcard-h"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-notepageline"/></svg>提示词</span>
+              <p>高端极简建筑拼贴与概念信息图，作品集版式，大面积纯白色 #FFFFFF 留白。以一栋别墅为中心主体，通过层叠的摄影剪贴展现简洁的几何体量、裸露混凝土肌理和大面积玻璃幕墙。高对比度，具有档案式场地调研氛围，抠图边缘清晰利落。使用圆形、半圆形和规整矩形等几何蒙版，局部框选或裁切现代建筑片段、人物与物件。以极细的黑色或浅灰色引线及精细几何轮廓连接各元素，形成分析图式表达。摄影画面以单色和低饱和度为主，仅点缀少量柔和色彩：暗砖红、淡蓝及细微暖光。使用小号极简无衬线标签作为占位文字，字距宽松。整体理性、克制、秩序清晰，光线平坦均匀，印刷级清晰度，无水印，避免营销海报、扁平卡通图标和霓虹风格。</p>
+            </div>
+            <ul class="boards">
+              <li><img src="v7/assets/img/collage-1.webp" alt="建筑概念拼贴第一版：横向版式，圆形蒙版与体量分析" width="1280" height="960" loading="lazy" decoding="async"></li>
+              <li><img src="v7/assets/img/collage-2.webp" alt="建筑概念拼贴第二版：方形版式，含平面与剖面" width="1280" height="1280" loading="lazy" decoding="async"></li>
+              <li><img src="v7/assets/img/collage-3.webp" alt="建筑概念拼贴第三版：方形版式，材料与空间组织" width="1280" height="1280" loading="lazy" decoding="async"></li>
+              <li><img src="v7/assets/img/collage-4.webp" alt="建筑概念拼贴第四版：横向版式，剖面与立面" width="1280" height="960" loading="lazy" decoding="async"></li>
+              <li><img src="v7/assets/img/collage-5.webp" alt="建筑概念拼贴第五版：横向版式，退台体量" width="1280" height="960" loading="lazy" decoding="async"></li>
+            </ul>
+          </div>
+          <p class="note">官方演示画布「建筑概念」：同一段提示词的五张结果。</p>
+        </section>
+
+        <section class="tab-panel" role="tabpanel" id="panel-time" aria-labelledby="tab-time" tabindex="0">
+          <header class="panel-head"><h3>时间与季节</h3><p>同一个视角，换成夜晚、冬天或秋天。</p></header>
+          <div class="stage stage-compare">
+            <div class="compare" data-compare>
+              <div class="cmp-frame">
+                <img class="cmp-b" data-cmp-b src="v7/assets/img/villa-2.webp" alt="图 B：夜景 23:00" width="768" height="1024" loading="lazy" decoding="async">
+                <div class="cmp-a"><img src="v7/assets/img/villa-1.webp" alt="图 A：鸟瞰" width="768" height="1024" loading="lazy" decoding="async"></div>
+                <span class="cmp-tag cmp-tag-a">图 A · 鸟瞰</span>
+                <span class="cmp-tag cmp-tag-b" data-cmp-tag>图 B · 夜景 23:00</span>
+                <span class="cmp-handle" aria-hidden="true"><i></i></span>
+                <input type="range" class="cmp-range" data-cmp-range min="0" max="100" value="50" step="1" aria-label="对比位置：向右拖动显示更多图 A">
+              </div>
+            </div>
+            <div class="cmp-side">
+              <p class="cmp-lead">对比预览</p>
+              <div class="cmp-vars" role="radiogroup" aria-label="选择图 B">
+                <button type="button" role="radio" aria-checked="true" data-cmp-var="villa-2" data-label="夜景 23:00"><img src="v7/assets/img/villa-2.webp" alt="" width="768" height="1024" loading="lazy" decoding="async"><span><b>夜景 23:00</b>技能 · 时间迁移</span></button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" data-cmp-var="villa-3" data-label="冬季"><img src="v7/assets/img/villa-3.webp" alt="" width="768" height="1024" loading="lazy" decoding="async"><span><b>冬季</b>技能 · 季节迁移</span></button>
+                <button type="button" role="radio" aria-checked="false" tabindex="-1" data-cmp-var="villa-4" data-label="秋季"><img src="v7/assets/img/villa-4.webp" alt="" width="768" height="1024" loading="lazy" decoding="async"><span><b>秋季</b>技能 · 季节迁移</span></button>
+              </div>
+            </div>
+          </div>
+          <p class="note">官方演示项目「别墅设计」：三张结果都以同一张鸟瞰图为参考图。</p>
+        </section>
+
+        <section class="tab-panel" role="tabpanel" id="panel-plan" aria-labelledby="tab-plan" tabindex="0">
+          <header class="panel-head"><h3>总平面与分析图</h3><p>从效果图，到图纸式的表达。</p></header>
+          <div class="stage stage-plan" data-gallery>
+            <figure class="plan-main"><img data-gallery-main src="v7/assets/img/urban-4.webp" alt="城市规划插画：山地文化街区总平面，水彩质感" width="1600" height="1060" loading="lazy" decoding="async"></figure>
+            <div class="plan-thumbs" role="radiogroup" aria-label="选择图纸">
+              <button type="button" role="radio" aria-checked="true" data-gallery-item="urban-4" data-alt="城市规划插画：山地文化街区总平面，水彩质感"><img src="v7/assets/img/urban-4.webp" alt="" width="1600" height="1060" loading="lazy" decoding="async"></button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gallery-item="urban-2" data-alt="城市规划插画：滨河片区总平面与图例"><img src="v7/assets/img/urban-2.webp" alt="" width="1600" height="1060" loading="lazy" decoding="async"></button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gallery-item="urban-3" data-alt="城市规划插画：生态公园总平面"><img src="v7/assets/img/urban-3.webp" alt="" width="1600" height="1060" loading="lazy" decoding="async"></button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gallery-item="urban-5" data-alt="城市规划插画：山坡度假建筑群总平面"><img src="v7/assets/img/urban-5.webp" alt="" width="1600" height="1060" loading="lazy" decoding="async"></button>
+              <button type="button" role="radio" aria-checked="false" tabindex="-1" data-gallery-item="villa-6" data-alt="别墅露台总平面图，由鸟瞰图转换而来"><img src="v7/assets/img/villa-6.webp" alt="" width="768" height="1024" loading="lazy" decoding="async"></button>
+            </div>
+          </div>
+          <p class="note">官方演示画布「城市规划」与「别墅设计」。</p>
+        </section>
+
+        <section class="tab-panel" role="tabpanel" id="panel-style" aria-labelledby="tab-style" tabindex="0">
+          <header class="panel-head"><h3>手绘与画风</h3><p>换一种画法，再让画面动起来。</p></header>
+          <div class="stage stage-style">
+            <figure class="loop" data-loop><video playsinline muted loop preload="none" poster="v7/assets/poster/style-1.webp" src="v7/media/style-1.mp4" controls width="540" height="720" aria-label="手绘风格短视频：电车车窗外的红色调广场">当前浏览器无法播放这段视频。</video><button type="button" class="loop-btn" aria-label="播放：红色调手绘短视频" aria-pressed="false"><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></button><figcaption><b>莫兰迪红</b>车窗外的广场</figcaption></figure>
+            <figure class="loop" data-loop><video playsinline muted loop preload="none" poster="v7/assets/poster/style-2.webp" src="v7/media/style-2.mp4" controls width="540" height="720" aria-label="手绘风格短视频：莫兰迪色调的街角建筑">当前浏览器无法播放这段视频。</video><button type="button" class="loop-btn" aria-label="播放：莫兰迪色调手绘短视频" aria-pressed="false"><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></button><figcaption><b>莫兰迪</b>街角建筑</figcaption></figure>
+            <figure class="loop" data-loop><video playsinline muted loop preload="none" poster="v7/assets/poster/style-3.webp" src="v7/media/style-3.mp4" controls width="540" height="720" aria-label="手绘风格短视频：粉彩色调的电车与街景">当前浏览器无法播放这段视频。</video><button type="button" class="loop-btn" aria-label="播放：粉彩色调手绘短视频" aria-pressed="false"><svg class="ic ic-play" aria-hidden="true" focusable="false"><use href="#i-playsimple"/></svg><svg class="ic ic-pause" aria-hidden="true" focusable="false"><use href="#i-pause"/></svg></button><figcaption><b>马卡龙粉彩</b>电车驶过</figcaption></figure>
+          </div>
+          <p class="note">官方首页案例「手绘渲染」的三段短视频，无声。</p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 从哪里开始 ===================== -->
+<section class="sec begin" id="begin" aria-labelledby="begin-title">
+  <div class="shell begin-in">
+    <header class="sec-head sec-head-center" data-reveal>
+      <h2 id="begin-title"><span class="nb">从你手上的</span><span class="nb">那件事开始。</span></h2>
+      <p>一份任务书、几张现场照片，或者一句还没说完整的要求。</p>
+    </header>
+    <div class="composer" data-composer data-reveal>
+      <ul class="attach" aria-label="可以一起带上的材料">
+        <li><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-doc"/></svg><span>任务书</span></li>
+        <li><img src="v7/assets/img/interior-1.webp" alt="" width="888" height="1184" loading="lazy" decoding="async"><span>图纸</span></li>
+        <li><img src="v7/assets/img/garden-1.webp" alt="" width="480" height="480" loading="lazy" decoding="async"><span>现场照片</span></li>
+        <li><img src="v7/assets/img/interior-2.webp" alt="" width="324" height="502" loading="lazy" decoding="async"><span>材料与参考</span></li>
+      </ul>
+      <label class="sr-only" for="composer-text">想让 Arco 帮你做什么</label>
+      <textarea id="composer-text" data-composer-text rows="3" placeholder="输入消息...  @ 添加引用  / 使用指令" spellcheck="false"></textarea>
+      <div class="composer-bar">
+        <span class="composer-tools" aria-hidden="true"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-add"/></svg><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-at"/></svg></span>
+        <p class="composer-status" data-composer-status role="status"></p>
+        <button type="button" class="composer-send" data-composer-copy aria-label="复制这段话"><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><span>复制这段话</span></button>
+      </div>
+    </div>
+    <ul class="suggest" data-suggest data-reveal aria-label="可以从这些任务开始">
+      <li><button type="button" data-text="解读设计任务书，提取关键指标和约束条件，梳理场地现状，输出多方向概念建议"><strong>任务书解读</strong><span>解读任务书，梳理场地与概念方向</span></button></li>
+      <li><button type="button" data-text="协助设计庭院花园方案，从场地分析到概念效果图、平面布局、植物配置逐步推进"><strong>花园方案</strong><span>从场地分析到平面与植物配置</span></button></li>
+      <li><button type="button" data-text="将项目调研和设计分析整合为可直接演示的汇报网页，包含数据可视化、指标卡片和主视觉"><strong>设计汇报</strong><span>生成可演示的汇报网页</span></button></li>
+      <li><button type="button" data-text="根据招标评分表按章节编写技术标文本，逐条响应评分项，生成正式方案设计说明"><strong>投标文本</strong><span>按章节编写技术标正式文本</span></button></li>
+      <li><button type="button" data-text="检查规划方案中容积率、建筑密度、绿地率、日照间距等核心指标是否满足规范要求"><strong>规划自检</strong><span>对照规范检查核心指标</span></button></li>
+    </ul>
+    <p class="note note-center" data-reveal>输入框为界面示意，不会发送任何内容。任务名称与示例语句取自 Arco 客户端首页。</p>
+  </div>
+</section>
+
+<!-- ===================== 与 D5 ===================== -->
+<section class="sec d5" id="d5" aria-labelledby="d5-title">
+  <div class="shell d5-grid">
+    <div class="d5-copy" data-reveal>
+      <h2 id="d5-title"><span class="nb">已经在用 D5，</span><span class="nb">就接着用。</span></h2>
+      <p class="d5-lead">Arco 可以关联正在打开的 D5 Render 项目，把场景里的画面带到画布上继续推敲。</p>
+      <ul class="facts">
+        <li><h3>关联项目</h3><p>检测到正在运行的 D5 Render 时，由你决定要不要关联。</p></li>
+        <li><h3>获取当前视口</h3><p>把场景里正在看的画面取到画布，作为下一步的起点。</p></li>
+        <li><h3>引用项目资源</h3><p>关联后，可以在画布里查看项目中的场景、渲染记录和可复用资源。</p></li>
+        <li><h3>来自 D5 Lite</h3><p>Lite 里的图片可以发送到 Arco 画布。</p></li>
+      </ul>
+      <p class="note">界面示意。需要本机已打开 D5 Render；可用范围以发布版本为准。</p>
+    </div>
+    <div class="d5-visual" data-reveal data-d5 role="group" aria-label="界面示意：在 Arco 中关联 D5 Render 项目">
+      <div class="d5-win">
+        <div class="d5-left">
+          <div class="link-card">
+            <p class="link-q">需要关联 D5 工作流吗？</p>
+            <p class="link-s" data-link-sub>已检测到当前正在运行的 D5 程序</p>
+            <div class="link-row">
+              <span class="link-file"><img src="v7/assets/brand.webp" alt="" width="18" height="18">D5 Render 项目.drs</span>
+              <span class="link-act">
+                <button type="button" class="btn-mini ghost" data-link="ignore">忽略</button>
+                <button type="button" class="btn-mini solid" data-link="ok">关联</button>
+              </span>
+            </div>
+          </div>
+          <div class="mini-composer" aria-hidden="true"><span>@添加，/引用</span><i><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-arrowup"/></svg></i></div>
+        </div>
+        <div class="d5-res">
+          <div class="res-h"><strong>画布资源</strong></div>
+          <div class="res-tabs" aria-hidden="true"><span>当前对话</span><span>全部生成</span><span class="on">关联中</span><span>云资源</span></div>
+          <div class="res-body">
+            <div class="res-empty" data-res-empty>
+              <strong>当前画布尚未关联项目</strong>
+              <p>关联后即可查看项目中的场景、渲染记录和可复用资源。</p>
+            </div>
+            <div class="res-linked" data-res-linked hidden>
+              <figure class="res-view"><img src="v7/assets/img/d5-lite-building.webp" alt="建筑外观效果图，代表 D5 场景中的当前视口" width="648" height="336" loading="lazy" decoding="async"><figcaption>当前视口</figcaption></figure>
+              <button type="button" class="btn-mini line" data-capture><svg class="ic" aria-hidden="true" focusable="false"><use href="#i-appwindow"/></svg>获取当前视口</button>
+              <p class="res-status" data-res-status role="status"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figure class="lite">
+        <img src="v7/assets/img/d5-lite-board.webp" alt="建筑方案分析图板" width="1000" height="750" loading="lazy" decoding="async">
+        <figcaption><img src="v7/assets/brand.webp" alt="" width="18" height="18">发送到 Arco</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 开始使用 ===================== -->
+<section class="get" id="get" aria-labelledby="get-title">
+  <div class="get-bg" aria-hidden="true"></div>
+  <div class="shell get-in" data-reveal>
+    <img class="get-icon" src="v7/assets/brand.webp" alt="" width="96" height="96">
+    <h2 id="get-title"><span class="nb">带一个真实的</span><span class="nb">项目来。</span></h2>
+    <p>一张图、一份任务书，或者一个还没想定的问题，都可以是起点。</p>
+    <div class="get-cta" data-download>
+      <button type="button" class="btn btn-glass" data-platform="windows" data-href="">下载 Windows 版</button>
+      <button type="button" class="btn btn-glass" data-platform="macos" data-href="">下载 macOS 版</button>
+    </div>
+    <p class="get-status" data-download-status role="status">当前为本地预览版本，下载入口尚未接入。</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="shell footer-in">
+    <div class="footer-brand">
+      <a class="brand" href="#top" aria-label="回到页面顶部"><img src="v7/assets/brand.webp" alt="" width="28" height="28"><span>D5 Arco</span></a>
+      <p>建筑与空间设计的 AI Agent。<br>一起想清楚，接着往前做。</p>
+    </div>
+    <nav class="footer-nav" aria-label="页脚导航">
+      <div><h2>产品</h2><a href="#canvas">画布</a><a href="#together">一起推敲</a><a href="#motion">视频</a><a href="#work">表达</a></div>
+      <div><h2>开始</h2><a href="#begin">从哪里开始</a><a href="#d5">与 D5</a><a href="#get">获取 Arco</a></div>
+    </nav>
+  </div>
+  <div class="shell footer-base">
+    <span>D5 Arco 由 Dimension 5 出品。</span>
+    <span>本地预览 · V7 · 2026-11-10</span>
+  </div>
+</footer>
+
+</body>
+</html>
